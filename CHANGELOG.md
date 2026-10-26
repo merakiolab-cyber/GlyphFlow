@@ -7,6 +7,9 @@ Všechny významné změny v projektu GlyphFlow jsou zaznamenány v tomto dokume
 ### Přidáno
 - Offline asset `apple-touch-icon.png` (180×180 px) vyrenderovaný z vektorového `icon.svg`.
 - Self-hostování fontů pro 100% offline běh: 10 WOFF2 souborů (`JetBrains Mono` a `Plus Jakarta Sans`) v `public/fonts/` s lokálním `fonts.css`.
+- Inicializace čistého Git repozitáře s `.gitignore` omezujícím build artefakty a tajnosti.
+- Licence MIT ([LICENSE](LICENSE)) pro open-source portfolio.
+- Rozšířená portfolio dokumentace v [README.md](README.md) pokrývající Figma Bridge, knihovnu 1000+ ikon, OpenType Studio i offline strukturu.
 
 ### Změněno
 - Projekt převzat z Google AI Studio do Cursoru; založen vývojový kontext (`.cursor/rules/`).

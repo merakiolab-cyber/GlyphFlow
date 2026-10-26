@@ -26,6 +26,6 @@ Tento dokument definuje plánovaný rozvoj aplikace GlyphFlow v příštích ver
 - [x] Vyčistit AI Studio leftover (`react-example`, Gemini/Express, `metadata.json`, unix `rm` v npm `clean`).
 - [x] Sanitizace SVG importu, validace JSON záloh a `?sync=`.
 - [x] Doplnit chybějící PWA asset `apple-touch-icon.png`; self-host fonty pro skutečný offline.
-- [ ] `git init`, licence, README pro portfolio, veřejný GitHub remote (až bude jméno/repo).
+- [x] `git init`, licence (MIT), README pro portfolio, veřejný GitHub remote (připraveno na remote).
 - [ ] Windows 11: **Tauri 2** — nativní `.exe` / `.msi` (rozhodnuto). PWA nechat jako vedlejší webový kanál.
 - [x] Windows-friendly npm skripty (`clean` bez `rm -rf`).
