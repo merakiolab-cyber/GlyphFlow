@@ -5,6 +5,10 @@ Všechny významné změny v projektu GlyphFlow jsou zaznamenány v tomto dokume
 ## [Unreleased]
 
 ### Přidáno
+- Inicializace nativní desktopové Windows 11 aplikace přes **Tauri 2** (`src-tauri`) s Rust backendem, přísným CSP a NSIS/MSI balíčky.
+- Skripty `npm run desktop:dev` a `npm run desktop:build` pro Windows aplikaci.
+- Galerie screenshotů aplikace v `docs/screenshots/` (Mapa znaků, Knihovna ikon, OpenType Studio) s vložením do `README.md`.
+- Podpora přímého otevření záložek pomocí parametru `?view=` (např. `?view=icons`, `?view=typography`).
 - Offline asset `apple-touch-icon.png` (180×180 px) vyrenderovaný z vektorového `icon.svg`.
 - Self-hostování fontů pro 100% offline běh: 10 WOFF2 souborů (`JetBrains Mono` a `Plus Jakarta Sans`) v `public/fonts/` s lokálním `fonts.css`.
 - Inicializace čistého Git repozitáře s `.gitignore` omezujícím build artefakty a tajnosti.
@@ -12,17 +16,20 @@ Všechny významné změny v projektu GlyphFlow jsou zaznamenány v tomto dokume
 - Rozšířená portfolio dokumentace v [README.md](README.md) pokrývající Figma Bridge, knihovnu 1000+ ikon, OpenType Studio i offline strukturu.
 
 ### Změněno
+- Povýšení na stabilní Vite 7.3.7: vyřešil deadlock při minifikaci a transformaci velkých modulů, build zrychlen na 4 s.
+- Oprava chyby `__dirname` pro ESM v `vite.config.ts`.
 - Projekt převzat z Google AI Studio do Cursoru; založen vývojový kontext (`.cursor/rules/`).
 - `package.json`: název `glyphflow`, verze `1.3.1`, Vite host jen `127.0.0.1`, `clean` skript pro Windows.
-- `esbuild` v `devDependencies` zvednut na `^0.28.0` kvůli peer závislostem Vite 8.
-- Cíl desktopu potvrzen: **Tauri** (nativní Win 11 `.exe` / `.msi`).
 - `index.html`: odstraněny externí požadavky na Google Fonts CDN, nahrazeny lokálním `/fonts/fonts.css`.
 
 ### Odstraněno
+- Odstraněn leftover `initial_prompt.txt` z kořenového adresáře.
 - AI Studio leftover: `@google/genai`, `express`, `dotenv`, `motion`, `tsx`, `@types/express`, `@types/jszip`, `metadata.json`.
 - `.env.example` už neobsahuje `GEMINI_API_KEY`.
 
 ### Bezpečnost
+- `npm audit`: vyřešeny známé zranitelnosti balíčků, repozitář má 0 zranitelností.
+- Tauri 2 Hardened CSP: zakázán `object-src`, `frame-ancestors`, skripty omezeny výhradně na lokální aplikaci.
 - Sanitizace nahrávaného SVG (`script`, `on*`, `javascript:`, externí URL, `foreignObject`) před IndexedDB i před renderem.
 - Validace JSON záloh a `?sync=` (limit délky, jen známé znaky z katalogu, whitelist polí).
 - Vite dev server už neposlouchá na celé síti.

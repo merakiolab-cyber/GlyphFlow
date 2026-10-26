@@ -4,6 +4,19 @@ Profesionální offline mapa znaků pro Windows a web, inspirovaná moderní viz
 
 ---
 
+## 📸 Náhledy aplikace
+
+| Mapa znaků & Unicode Studio | Knihovna 1600+ vektorových ikon |
+|:---:|:---:|
+| ![Mapa znaků](docs/screenshots/charmap.png) | ![Knihovna ikon](docs/screenshots/icons.png) |
+
+<p align="center">
+  <strong>Typografická analýza & OpenType Studio</strong><br />
+  <img src="docs/screenshots/typography.png" alt="Typografická analýza & OpenType Studio" width="100%" />
+</p>
+
+---
+
 ## 🚀 Klíčové Funkce
 
 - **Bleskové Vyhledávání v Reálném Čase**:

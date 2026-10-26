@@ -25,7 +25,14 @@ export default function App() {
 
   const [activeView, setActiveView] = useState<
     'catalog' | 'icons' | 'typography' | 'favorites' | 'history' | 'scratchpad' | 'sync'
-  >('catalog');
+  >(() => {
+    const params = new URLSearchParams(window.location.search);
+    const view = params.get('view');
+    if (view === 'icons' || view === 'typography' || view === 'favorites' || view === 'history' || view === 'scratchpad' || view === 'sync') {
+      return view;
+    }
+    return 'catalog';
+  });
 
   const [gridDensity, setGridDensity] = useState<'compact' | 'normal' | 'spacious'>('normal');
   const [scratchpadText, setScratchpadText] = useState<string>(() => {

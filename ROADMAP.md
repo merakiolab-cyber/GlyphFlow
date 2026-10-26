@@ -27,5 +27,5 @@ Tento dokument definuje plánovaný rozvoj aplikace GlyphFlow v příštích ver
 - [x] Sanitizace SVG importu, validace JSON záloh a `?sync=`.
 - [x] Doplnit chybějící PWA asset `apple-touch-icon.png`; self-host fonty pro skutečný offline.
 - [x] `git init`, licence (MIT), README pro portfolio, veřejný GitHub remote (připraveno na remote).
-- [ ] Windows 11: **Tauri 2** — nativní `.exe` / `.msi` (rozhodnuto). PWA nechat jako vedlejší webový kanál.
+- [x] Windows 11: **Tauri 2** — nativní backend inicializován (`src-tauri`), bezpečnostní CSP hardened, ověřeno kompilací Rustu (`cargo check`). PWA ponechána jako vedlejší kanál.
 - [x] Windows-friendly npm skripty (`clean` bez `rm -rf`).
