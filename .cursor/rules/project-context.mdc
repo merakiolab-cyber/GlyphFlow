@@ -1,0 +1,32 @@
+---
+description: GlyphFlow project context, stack, and how to keep the repo coherent
+alwaysApply: true
+---
+
+# GlyphFlow — kontext
+
+Offline Unicode mapa znaků + knihovna ikon + OpenType studio. Původ: Google AI Studio export. Cíl: veřejné GitHub portfolio + použitelná Win 11 apka.
+
+## Stack
+
+- React 19 + TypeScript + Vite 8 + Tailwind CSS v4 (`@tailwindcss/vite`)
+- Stav UI v `App.tsx` (view switcher, ne React Router)
+- Persistence: IndexedDB (`src/db/indexedDb.ts`) + LocalStorage fallback (`gf_*` klíče)
+- PWA: `vite-plugin-pwa` v `vite.config.ts`
+- Data: `src/data/characters.ts`, `categories.ts`, `icons.ts`, `iconsCatalog.ts`
+
+## Do
+
+- Drž celý tok lokální: žádný backend, žádné telemetrie, žádné AI API, dokud to není explicitní feature
+- Po každé smysluplné změně aktualizuj `CHANGELOG.md` a checkboxy/fáze v `ROADMAP.md`
+- Nové typy do `src/types/index.ts`, persistenci jen přes `localDB`
+- UI česky (uživatelské texty), kód a identifikátory anglicky
+- Po UI změně ověř v prohlížeči (katalog, ikony, typografie, oblíbené, sync)
+
+## Don't
+
+- Nereintrodukuj `@google/genai`, Express server, `GEMINI_API_KEY`, `metadata.json` capability Gemini
+- Neměň `package.json` `name` (`glyphflow`) / `version` bez changelogu
+- Neukládej tajemství do gitu; `.env*` je v `.gitignore` kromě `.env.example`
+- Nepiš `rm -rf` skripty — vývoj běží na Windows PowerShell
+- Nerozbíjej offline-first: fonty z Google Fonts CDN jsou známý online závislostní dluh

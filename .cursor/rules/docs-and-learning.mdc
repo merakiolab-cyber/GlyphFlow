@@ -1,0 +1,24 @@
+---
+description: Keep changelog, roadmap, and learned do/don'ts in sync with development
+alwaysApply: true
+---
+
+# Changelog, roadmap, učení
+
+## Changelog (`CHANGELOG.md`)
+
+- Keep a Changelog: `[Unreleased]` nahoře, pak verze
+- Skupiny: Přidáno / Změněno / Opraveno / Odstraněno / Bezpečnost
+- Zapisuj hned po dokončení práce, ne na konci dne
+- Bezpečnostní nálezy patří do **Bezpečnost**, i když se ještě neopravují (označ `otevřené`)
+
+## Roadmap (`ROADMAP.md`)
+
+- Hotové = `[x]`, běžící = označ „v kurzu“, nové cíle do další fáze
+- Aktuální cíl uživatele: GitHub public portfolio + funkční Win 11 apka
+- Neoznačuj fázi hotovou, dokud to není ověřené (build + UI)
+
+## Pravidla
+
+- Nový do/don't z recenze nebo bugu přidej do `.cursor/rules/` (krátce, s příkladem)
+- Jedno téma na jeden `.mdc`; `alwaysApply` jen pro věci platné v každé session

@@ -1,0 +1,24 @@
+---
+description: Security baseline — no backdoors, sanitize untrusted SVG/JSON, local-only data
+alwaysApply: true
+---
+
+# Bezpečnost
+
+Aplikace pracuje s SVG, JSON zálohami a `?sync=` v URL. Veřejné portfolio nesmí obsahovat skryté sítě, klíče ani AI Studio leftover server.
+
+## Do
+
+- SVG import: parsovat, vyhodit `<script>`, event handlery (`on*`), `javascript:` URL, `<foreignObject>`, externí entity
+- `dangerouslySetInnerHTML` jen na sanitizovaný SVG markup, nikdy na surový soubor
+- Import zálohy: validovat tvar `SyncData` (verze, pole), odmítnout neočekávané klíče a obří payload
+- `?sync=`: limit velikosti, `JSON.parse` v try/catch, importovat jen známé znaky z katalogu (ne libovolný string)
+- Figma `postMessage` cílit na origin pluginu, ne `'*'`
+- Závislosti jen ty, které kód importuje; po odstranění mrtvých balíčků `npm audit`
+
+## Don't
+
+- Žádný `eval`, `new Function`, dynamický `<script>`, skrytý `fetch` na cizí host
+- Žádné API klíče v klientu, `.env`, README ani generate-plugin ZIP
+- Nespouštěj uživatelský SVG jako HTML bez sanitizace (XSS v IndexedDB přetrvá)
+- Neposílej oblíbené / historii / custom ikony na síť (cloud sync jen po výslovném souhlasu a designu)
