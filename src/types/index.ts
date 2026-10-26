@@ -28,6 +28,8 @@ export interface IconItem {
   svgPath: string; // SVG path data (d attribute) or full inner markup
   viewBox?: string;
   isCustom?: boolean;
+  isCurated?: boolean;
+  collection?: string;
 }
 
 export interface CustomIconItem {
@@ -39,7 +41,8 @@ export interface CustomIconItem {
   tags: string[];
   svgContent: string;
   viewBox: string;
-  addedAt: number;
+  addedAt?: number;
+  isCustom?: boolean;
 }
 
 export interface IconCollection {

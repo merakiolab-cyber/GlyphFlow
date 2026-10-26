@@ -5,6 +5,15 @@ Všechny významné změny v projektu GlyphFlow jsou zaznamenány v tomto dokume
 ## [Unreleased]
 
 ### Přidáno & Vylepšeno (Knihovna ikon v1.3.2)
+- **Nové sady ikon & specializované kategorie: Finance, Software/IT a Umělá inteligence (AI)**:
+  - **Finance & Investování (93+ ikon)**: 12 nových ručně navržených 24×24 vektorových ikon (`Crypto Token`, `Candlestick Bull/Bear`, `Liquidity Pool`, `Yield Farming`, `Staking Rewards`, `Hardware Wallet`, `Smart Contract`, `Order Book`, `DeFi Swap`, `Bull Market`, `Investment Portfolio`) + provázání s existujícími Lucide ikonami a rozšířenými českými/anglickými štítky (krypto, akcie, trading, burza, defi, staking, výnos, bitcoin, peněženka, grafy).
+  - **Software & IT Architektura (112+ ikon)**: 12 nových vektorových ikon pro moderní inženýrství (`API Endpoint`, `Docker Container`, `Kubernetes Cluster`, `CI/CD Pipeline`, `Microservices Mesh`, `Load Balancer`, `GraphQL Schema`, `Event Queue / Kafka`, `Cloud Native`, `Git Hotfix`, `WebAssembly (WASM)`, `Monorepo Architecture`) + provázání s vývojářskými ikonami (code, cloud, database, server, cpu, terminal, git, bug, container, pipeline).
+  - **Umělá inteligence & AI (36+ ikon)**: 12 nových specializovaných ikon pro generativní AI a strojové učení (`LLM Neural Model`, `AI Prompt Cursor`, `Autonomous AI Agent`, `Neural Synapse`, `Token Streaming`, `RAG Vector Search`, `Generative Diffusion`, `AI Copilot`, `AI Tensor GPU`, `Transformer Attention`, `Computer Vision AI`, `Voice AI Waveform`) + provázání s Lucide ikonami (bot, brain, sparkles, wand, microchip).
+  - **Plná podpora všech 5 stylů a Figma Bridge**: Všechny nové ikony mají precizní geometrii s podporou Solid výřezů (`evenodd`), zářivých 2-tónových Duotone akcentů i okamžitého exportu do Figma (`Ctrl+V`), React JSX a SVG/PNG ZIPu.
+  - **Vylepšený správce sad (CustomIconsManagerModal)**:
+    - Nová karta "Doporučené kurátorské sady GlyphFlow" s mini-náhledy a 1-click instalací jednotlivých sad i všech 36 ikon do lokální IndexedDB paměti.
+    - Interaktivní filtrovací pilulky v zobrazení "Moje sady & Balíčky" umožňující bleskové přepínání mezi kurátorskými sadami (`Finance & Krypto`, `Software & IT`, `Umělá inteligence (AI)`) a uživatelskými importy.
+  - **URL hluboké odkazy**: Podpora parametrů `?view=icons&category=finance`, `?view=icons&category=software-it`, `?view=icons&category=ai-tech` a parametru hledání `?q=`.
 - **Precizní Solid (Plná) engine pro ikony**:
   - Vyřešena ztráta detailů a špatné překryvy: zavedena geometrická analýza SVG drah (`isPathClosedGeometry`) a výpočet přesných bounding boxů pro každý SVG element.
   - Vytváření sloučených SVG compound paths s `fill-rule="evenodd"` pro tvary s vnitřními otvory (`Eye`, `Settings`, `Camera`, `Target`, `Disc` apod.), kde je střed skutečně transparentním vektorovým výřezem.

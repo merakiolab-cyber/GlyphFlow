@@ -8,13 +8,18 @@ import {
   Layers,
   Sparkles,
   Check,
-  AlertCircle,
   Download,
   Image as ImageIcon,
+  Zap,
 } from 'lucide-react';
 import { CustomIconItem } from '../types';
 import { localDB } from '../db/indexedDb';
 import { parseUploadedSvg, sanitizeViewBox } from '../utils/svgSanitize';
+import {
+  CURATED_COLLECTIONS,
+  ALL_CURATED_CUSTOM_ICONS,
+  CuratedCollectionInfo,
+} from '../data/curatedCustomIconSets';
 
 interface CustomIconsManagerModalProps {
   isOpen: boolean;
@@ -40,9 +45,12 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
 
   if (!isOpen) return null;
 
-  // Extract unique collections
+  // Extract unique collections (curated + user custom)
   const collections = Array.from(
-    new Set(customIcons.map((i) => i.collection || 'Moje ikony'))
+    new Set([
+      ...CURATED_COLLECTIONS.map((c) => c.name),
+      ...customIcons.map((i) => i.collection || 'Moje ikony'),
+    ])
   );
 
   const filteredIcons =
@@ -136,6 +144,34 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
     a.download = `glyphflow_custom_icons_${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const handleInstallCuratedSet = async (curatedSet: CuratedCollectionInfo) => {
+    setIsProcessing(true);
+    try {
+      await localDB.bulkAddCustomIcons(curatedSet.icons);
+      onIconsUpdated();
+      setFeedbackMessage(`Sada "${curatedSet.name}" (${curatedSet.icons.length} ikon) byla úspěšně uložena do IndexedDB!`);
+      setTimeout(() => setFeedbackMessage(null), 3000);
+    } catch (err) {
+      console.error('Failed to install curated set', err);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleInstallAllCuratedSets = async () => {
+    setIsProcessing(true);
+    try {
+      await localDB.bulkAddCustomIcons(ALL_CURATED_CUSTOM_ICONS);
+      onIconsUpdated();
+      setFeedbackMessage(`Všech 36 ikon ze sad Finance, IT a AI bylo úspěšně uloženo do IndexedDB!`);
+      setTimeout(() => setFeedbackMessage(null), 3000);
+    } catch (err) {
+      console.error('Failed to install all curated sets', err);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -232,6 +268,93 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
 
         {/* Drop zone & Upload Area */}
         <div className="p-6 overflow-y-auto flex-1 space-y-6">
+          {/* Curated Pre-built Packs Showcase */}
+          <div className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <h3 className="text-xs font-semibold text-zinc-200 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Doporučené kurátorské sady GlyphFlow</span>
+                </h3>
+                <p className="text-[11px] text-zinc-400 mt-0.5">
+                  Ručně navržené vektorové ikony pro Finance & Krypto, Software/IT a Umělou inteligenci.
+                </p>
+              </div>
+              <button
+                onClick={handleInstallAllCuratedSets}
+                disabled={isProcessing}
+                className="px-3 py-1.5 text-xs font-semibold text-zinc-950 bg-cyan-400 hover:bg-cyan-300 disabled:opacity-50 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 self-start sm:self-auto"
+              >
+                <Zap className="w-3.5 h-3.5" />
+                <span>Nainstalovat všech 36 ikon</span>
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
+              {CURATED_COLLECTIONS.map((cSet) => {
+                const isAlreadyInstalled = cSet.icons.every((ci) =>
+                  customIcons.some((saved) => saved.id === ci.id)
+                );
+                return (
+                  <div
+                    key={cSet.id}
+                    className="p-3 bg-zinc-950/70 border border-zinc-800/80 rounded-lg flex flex-col justify-between space-y-2.5"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-medium text-white truncate">
+                          {cSet.name}
+                        </span>
+                        <span className="text-[10px] font-mono text-zinc-400 bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800">
+                          {cSet.badge}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-zinc-400 mt-1 line-clamp-2">
+                        {cSet.description}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1 border-t border-zinc-900">
+                      {/* Mini Preview Icons */}
+                      <div className="flex items-center -space-x-1.5">
+                        {cSet.icons.slice(0, 4).map((icon) => (
+                          <div
+                            key={icon.id}
+                            className="w-5 h-5 rounded-md bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 p-0.5 shadow-xs"
+                            dangerouslySetInnerHTML={{
+                              __html: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full">${icon.svgContent}</svg>`,
+                            }}
+                          />
+                        ))}
+                      </div>
+
+                      <button
+                        onClick={() => handleInstallCuratedSet(cSet)}
+                        disabled={isProcessing}
+                        className={`px-2 py-1 text-[11px] font-medium rounded transition-colors cursor-pointer flex items-center gap-1 ${
+                          isAlreadyInstalled
+                            ? 'text-emerald-400 bg-emerald-950/40 border border-emerald-800/50'
+                            : 'text-zinc-300 hover:text-white bg-zinc-850 hover:bg-zinc-800 border border-zinc-750'
+                        }`}
+                      >
+                        {isAlreadyInstalled ? (
+                          <>
+                            <Check className="w-3 h-3 text-emerald-400" />
+                            <span>Uloženo</span>
+                          </>
+                        ) : (
+                          <>
+                            <Plus className="w-3 h-3" />
+                            <span>Uložit do DB</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           <div
             onDragOver={(e) => {
               e.preventDefault();

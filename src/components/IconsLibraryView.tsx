@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { icons as LucideIcons } from 'lucide-react';
 import { ICON_THEMES, getAllLucideIcons } from '../data/iconsCatalog';
+import { ALL_CURATED_CUSTOM_ICONS, CURATED_COLLECTIONS } from '../data/curatedCustomIconSets';
 import { CustomIconItem, IconItem, IconStyle } from '../types';
 import { localDB } from '../db/indexedDb';
 import {
@@ -48,8 +49,14 @@ const DESIGNER_COLORS = [
 ];
 
 export const IconsLibraryView: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all-icons');
+  const [searchQuery, setSearchQuery] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('q') || params.get('search') || '';
+  });
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('category') || params.get('theme') || 'all-icons';
+  });
   const [selectedStyle, setSelectedStyle] = useState<IconStyle>(() => {
     const params = new URLSearchParams(window.location.search);
     const s = params.get('style') as IconStyle;
@@ -93,32 +100,77 @@ export const IconsLibraryView: React.FC = () => {
     loadCustomIcons();
   }, []);
 
-  // Merge built-in Lucide icons with custom uploaded icons
+  // Extract unique collections (curated + user-uploaded)
+  const allCustomCollections = useMemo(() => {
+    const list: string[] = CURATED_COLLECTIONS.map((c) => c.name);
+    customIcons.forEach((c) => {
+      const col = c.collection || 'Moje ikony';
+      if (!list.includes(col)) list.push(col);
+    });
+    return list;
+  }, [customIcons]);
+
+  // Merge built-in Lucide icons with curated sets & custom uploaded icons
   const allIcons = useMemo(() => {
     const builtIn = getAllLucideIcons();
-    const customFormatted: IconItem[] = customIcons.map((c) => ({
+
+    // Curated vector icons (Finance, IT, AI)
+    const curatedFormatted: IconItem[] = ALL_CURATED_CUSTOM_ICONS.map((c) => ({
       id: c.id,
       name: c.name,
       czechName: c.czechName,
-      category: 'custom-icons',
-      tags: [...c.tags, 'custom', 'upload', c.collection || 'Moje ikony'],
+      category: c.category,
+      tags: [...c.tags, 'curated', c.collection || 'GlyphFlow'],
       svgPath: c.svgContent,
       viewBox: c.viewBox,
       isCustom: true,
+      isCurated: true,
+      collection: c.collection,
     }));
-    return [...customFormatted, ...builtIn];
+
+    const curatedIds = new Set(ALL_CURATED_CUSTOM_ICONS.map((c) => c.id));
+
+    // User-uploaded custom icons from IndexedDB (excluding any seeded duplicates)
+    const customFormatted: IconItem[] = customIcons
+      .filter((c) => !curatedIds.has(c.id))
+      .map((c) => ({
+        id: c.id,
+        name: c.name,
+        czechName: c.czechName,
+        category: c.category || 'custom-icons',
+        tags: [...c.tags, 'custom', 'upload', c.collection || 'Moje ikony'],
+        svgPath: c.svgContent,
+        viewBox: c.viewBox,
+        isCustom: true,
+        isCurated: false,
+        collection: c.collection || 'Moje ikony',
+      }));
+
+    return [...curatedFormatted, ...customFormatted, ...builtIn];
   }, [customIcons]);
 
   // Filtering
   const filteredIcons = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
     return allIcons.filter((icon) => {
-      if (selectedCategory !== 'all-icons' && icon.category !== selectedCategory) {
-        return false;
+      // Category filter
+      if (selectedCategory !== 'all-icons') {
+        if (selectedCategory === 'custom-icons') {
+          if (!icon.isCustom) return false;
+        } else if (icon.category !== selectedCategory) {
+          return false;
+        }
       }
+
+      // Sub-collection filter when viewing custom-icons
       if (selectedCategory === 'custom-icons' && selectedCustomCollection !== 'all') {
-        if (!icon.tags.includes(selectedCustomCollection)) return false;
+        const matchesCollection =
+          icon.collection === selectedCustomCollection ||
+          icon.tags.some((t) => t.toLowerCase() === selectedCustomCollection.toLowerCase());
+        if (!matchesCollection) return false;
       }
+
+      // Full text search in Czech & English
       if (q) {
         return (
           icon.name.toLowerCase().includes(q) ||
@@ -314,14 +366,14 @@ export const IconsLibraryView: React.FC = () => {
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-200 flex items-center gap-1.5">
               <Folder className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Vlastní sady ikon</span>
+              <span>Vlastní & kurátorské sady</span>
             </span>
-            <span className="text-[10px] font-mono-nums text-zinc-400 bg-zinc-800 px-1.5 py-0.2 rounded">
-              {customIcons.length}
+            <span className="text-[10px] font-mono-nums text-cyan-300 bg-cyan-950/60 border border-cyan-800/60 px-1.5 py-0.5 rounded font-medium">
+              {allIcons.filter((i) => i.isCustom).length}
             </span>
           </div>
           <p className="text-[11px] text-zinc-400 leading-snug">
-            Nahrajte vlastní SVG balíčky do lokální IndexedDB paměti.
+            3 kurátorské sady (Finance, IT, AI) + podpora vlastního SVG nahrávání do offline paměti.
           </p>
           <div className="flex gap-1.5">
             <button
@@ -359,7 +411,7 @@ export const IconsLibraryView: React.FC = () => {
                 theme.id === 'all-icons'
                   ? allIcons.length
                   : theme.id === 'custom-icons'
-                  ? customIcons.length
+                  ? allIcons.filter((i) => i.isCustom).length
                   : allIcons.filter((i) => i.category === theme.id).length;
 
               return (
@@ -542,7 +594,7 @@ export const IconsLibraryView: React.FC = () => {
               title="Spravovat a nahrávat vlastní SVG sady"
             >
               <Folder className="w-3.5 h-3.5 text-zinc-400" />
-              <span>Vlastní sady ({customIcons.length})</span>
+              <span>Vlastní sady ({allIcons.filter((i) => i.isCustom).length})</span>
             </button>
 
             <button
@@ -584,7 +636,7 @@ export const IconsLibraryView: React.FC = () => {
         </div>
 
         {/* Custom Icons Sub-Collection Filter (When viewing custom-icons) */}
-        {selectedCategory === 'custom-icons' && customIcons.length > 0 && (
+        {selectedCategory === 'custom-icons' && allIcons.some((i) => i.isCustom) && (
           <div className="flex items-center gap-2 overflow-x-auto py-1 shrink-0">
             <span className="text-xs text-zinc-500 shrink-0">Sada:</span>
             <button
@@ -595,10 +647,12 @@ export const IconsLibraryView: React.FC = () => {
                   : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
               }`}
             >
-              Všechny vlastní ({customIcons.length})
+              Všechny sady ({allIcons.filter((i) => i.isCustom).length})
             </button>
-            {Array.from(new Set(customIcons.map((i) => i.collection || 'Moje ikony'))).map((col) => {
-              const count = customIcons.filter((i) => (i.collection || 'Moje ikony') === col).length;
+            {allCustomCollections.map((col) => {
+              const count = allIcons.filter(
+                (i) => i.isCustom && (i.collection === col || i.tags.some((t) => t.toLowerCase() === col.toLowerCase()))
+              ).length;
               return (
                 <button
                   key={col}
@@ -689,8 +743,8 @@ export const IconsLibraryView: React.FC = () => {
                       </button>
                     )}
 
-                    {/* Custom icon delete badge */}
-                    {icon.isCustom && (
+                    {/* Custom icon delete badge (only for user-uploaded custom icons) */}
+                    {icon.isCustom && !icon.isCurated && (
                       <button
                         onClick={(e) => handleDeleteCustomIcon(icon.id, e)}
                         className="absolute top-1.5 right-1.5 p-1 text-zinc-500 hover:text-rose-400 opacity-60 hover:opacity-100 transition-opacity"

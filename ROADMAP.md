@@ -10,8 +10,9 @@ Tento dokument definuje plánovaný rozvoj aplikace GlyphFlow v příštích ver
 - [x] Export Studio pro vektorové SVG a rastrové PNG v různých rozlišeních.
 
 ## 🌟 Fáze 2: Designérská knihovna ikon & Emojis (Dokončeno)
-- [x] Sekce Knihovna ikon (1000+) s tématy Web, Business, E-commerce, Code, Cloud.
-- [x] Styly Outline, Solid, Duotone, Colored a 3D.
+- [x] Sekce Knihovna ikon (1600+) s tématy Web, Finance & Investování, Software & IT, Umělá inteligence (AI), Business, E-commerce, Bezpečnost.
+- [x] 36 nových ručně navržených vektorových ikon pro DeFi, candlestick trading, Docker, K8s, CI/CD, LLM modely, prompty a agenty.
+- [x] Styly Outline, Solid (s compound cutouts), Duotone (zářivé 2-tónové akcenty), Colored a 3D.
 - [x] Kopírování SVG, React JSX a Data URL pro Figma a AI.
 - [x] Přidání rozsáhlých sad Emojis, smajlíků a samolepek do mapy znaků.
 

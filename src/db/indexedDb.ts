@@ -333,7 +333,9 @@ class LocalDatabase {
     for (const icon of icons) {
       newMap.set(icon.id, icon);
     }
-    const updated = Array.from(newMap.values()).sort((a, b) => b.addedAt - a.addedAt);
+    const updated = Array.from(newMap.values()).sort(
+      (a, b) => (b.addedAt ?? 0) - (a.addedAt ?? 0)
+    );
     localStorage.setItem('gf_custom_icons', JSON.stringify(updated));
   }
 
