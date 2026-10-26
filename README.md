@@ -65,17 +65,25 @@ Profesionální offline mapa znaků pro Windows a web, inspirovaná moderní viz
 ├── package.json                 # Závislosti a npm skripty
 ├── tsconfig.json                # TypeScript konfigurace
 ├── vite.config.ts               # Vite konfigurace s @tailwindcss/vite a vite-plugin-pwa
+├── docs/
+│   └── screenshots/             # Náhledy aplikace pro portfolio
 ├── public/
 │   ├── icon.svg                 # Vektorová SVG ikona aplikace
 │   ├── apple-touch-icon.png     # 180×180 px rastrová ikona pro PWA / iOS
 │   └── fonts/                   # Self-hostované WOFF2 fonty a fonts.css
+├── src-tauri/                   # Nativní desktopový backend pro Windows 11 (Tauri 2)
+│   ├── Cargo.toml               # Rust manifest a konfigurace sestavení
+│   ├── tauri.conf.json          # Zabezpečená konfigurace okna, CSP a NSIS/MSI
+│   └── src/                     # Rust zdrojové soubory (main.rs, lib.rs)
 └── src/
     ├── main.tsx                 # Hlavní React vstup
     ├── App.tsx                  # Aplikační layout a router stavů
     ├── index.css                # Tailwind CSS v4, neonové efekty a typografie
     ├── data/
     │   ├── categories.ts        # Definice kategorií a Unicode bloků
-    │   └── characters.ts        # Kurátorovaná databáze 600+ Unicode znaků s CZ/EN názvy
+    │   ├── characters.ts        # Kurátorovaná databáze 600+ Unicode znaků s CZ/EN názvy
+    │   ├── icons.ts             # Metadata a témata ikon
+    │   └── iconsCatalog.ts      # Index 1600+ vektorových ikon
     ├── db/
     │   └── indexedDb.ts         # Lokální IndexedDB úložiště pro offline persistenci
     ├── design-system/
@@ -87,7 +95,7 @@ Profesionální offline mapa znaků pro Windows a web, inspirovaná moderní viz
     │   ├── usePWAInstall.ts     # PWA instalace pro Windows desktop
     │   └── useUnicodeData.ts    # Reálný čas: normalizace a sub-milisekundové vyhledávání
     ├── components/
-    │   ├── Header.tsx           # Hlavní hlavička dle Top Bar kontraktu
+    │   ├── Header.tsx           # Hlavní navigace a přepínání pohledů
     │   ├── SearchBar.tsx        # Vyhledávací lišta s klávesovou zkratkou a dropdownem historie
     │   ├── CategoryNav.tsx      # Přepínání sad symbolů s počítadly
     │   ├── GlyphGrid.tsx        # Mřížka znaků s přepínačem hustoty zobrazení
@@ -95,6 +103,10 @@ Profesionální offline mapa znaků pro Windows a web, inspirovaná moderní viz
     │   ├── GlyphDetailModal.tsx # Inspekce znaku a všech Unicode kódování
     │   ├── ExportModal.tsx      # Grafické studio pro SVG & PNG export
     │   ├── Scratchpad.tsx       # Textová schránka pro skládání textu (Charmap buffer)
+    │   ├── IconsLibraryView.tsx # Knihovna 1600+ vektorových ikon se styly
+    │   ├── TypographyStudioView.tsx # OpenType Studio a anatomie glyfů
+    │   ├── FigmaBridgeModal.tsx # Export do Figma Pluginu a design systémů
+    │   ├── CustomIconsManagerModal.tsx # Správce vlastních SVG kolekcí
     │   ├── FavoritesView.tsx    # Vyhrazený pohled pro oblíbené symboly
     │   ├── HistoryDrawer.tsx    # Přehled historie hledání a zkopírovaných položek
     │   ├── SyncModal.tsx        # Synchronizace dat a import/export záloh
@@ -104,6 +116,10 @@ Profesionální offline mapa znaků pro Windows a web, inspirovaná moderní viz
     │   └── index.ts             # TypeScript rozhraní pro Glyph, Category, Options
     └── utils/
         ├── exportUtils.ts       # Generátor vektorového SVG a render do PNG Canvas
+        ├── figmaBridge.ts       # Generátor Figma Desktop Pluginu (.zip)
+        ├── safePayload.ts       # Validace a sanitizace JSON záloh a ?sync=
+        ├── svgSanitize.ts       # Striktní bezpečnostní sanitizace importovaných SVG
+        ├── typographyAnalysis.ts# Analýza OpenType funkcí a anatomie písma
         └── unicodeUtils.ts      # Kódování a konverze (Hex, HTML, CSS, UTF-8 bytes)
 ```
 
@@ -126,14 +142,20 @@ Profesionální offline mapa znaků pro Windows a web, inspirovaná moderní viz
 # Instalace závislostí
 npm install
 
-# Spuštění vývojového serveru
+# Spuštění webového vývojového serveru
 npm run dev
+
+# Spuštění nativní Windows 11 aplikace (Tauri 2)
+npm run desktop:dev
 
 # Kontrola TypeScript typů
 npm run lint
 
-# Produkční sestavení
+# Produkční sestavení webové PWA aplikace
 npm run build
+
+# Sestavení nativního Windows instalačního balíčku (.exe / .msi)
+npm run desktop:build
 ```
 
 ---
