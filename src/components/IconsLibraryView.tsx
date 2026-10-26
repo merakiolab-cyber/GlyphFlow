@@ -38,22 +38,26 @@ import { CustomIconsManagerModal } from './CustomIconsManagerModal';
 import { parseUploadedSvg, sanitizeViewBox } from '../utils/svgSanitize';
 
 const DESIGNER_COLORS = [
-  { name: 'Bílá / Světlá', color: '#FFFFFF', secondary: '#71717A' },
-  { name: 'Čistý grafit', color: '#18181B', secondary: '#A1A1AA' },
-  { name: 'Kyanidová (Cyan)', color: '#00F2FE', secondary: '#0284C7' },
-  { name: 'Smaragdová (Emerald)', color: '#10B981', secondary: '#047857' },
-  { name: 'Královská fialová', color: '#8B5CF6', secondary: '#6D28D9' },
-  { name: 'Západ slunce (Amber)', color: '#F59E0B', secondary: '#B45309' },
-  { name: 'Korálová (Rose)', color: '#F43F5E', secondary: '#BE123C' },
+  { name: 'Bílá / Kyanidová (Cyan)', color: '#FFFFFF', secondary: '#00F2FE' },
+  { name: 'Čistý grafit / Azurová', color: '#18181B', secondary: '#38BDF8' },
+  { name: 'Kyanidová (Cyan) / Hluboká modř', color: '#00F2FE', secondary: '#0284C7' },
+  { name: 'Smaragdová (Emerald) / Mint', color: '#10B981', secondary: '#34D399' },
+  { name: 'Královská fialová / Růžová', color: '#8B5CF6', secondary: '#EC4899' },
+  { name: 'Západ slunce (Amber) / Oranž', color: '#F59E0B', secondary: '#EA580C' },
+  { name: 'Korálová (Rose) / Karmín', color: '#F43F5E', secondary: '#BE123C' },
 ];
 
 export const IconsLibraryView: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all-icons');
-  const [selectedStyle, setSelectedStyle] = useState<IconStyle>('outline');
+  const [selectedStyle, setSelectedStyle] = useState<IconStyle>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const s = params.get('style') as IconStyle;
+    return ['outline', 'solid', 'duotone', 'colored', 'modern3d'].includes(s) ? s : 'outline';
+  });
   const [strokeWidth, setStrokeWidth] = useState<number>(2);
   const [iconColor, setIconColor] = useState<string>('#FFFFFF');
-  const [secondaryColor, setSecondaryColor] = useState<string>('#71717A');
+  const [secondaryColor, setSecondaryColor] = useState<string>('#00F2FE');
   const [iconSize, setIconSize] = useState<number>(24);
 
   // Custom uploaded icons from IndexedDB
@@ -264,77 +268,21 @@ export const IconsLibraryView: React.FC = () => {
     img.src = url;
   };
 
-  // Render icon inside the card matching selected style
-  const renderIconPreview = (icon: IconItem) => {
-    if (icon.isCustom) {
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="26"
-          height="26"
-          viewBox={sanitizeViewBox(icon.viewBox)}
-          fill={selectedStyle === 'solid' ? iconColor : 'none'}
-          stroke={selectedStyle === 'solid' ? 'none' : iconColor}
-          strokeWidth={selectedStyle === 'solid' ? 0 : strokeWidth}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          dangerouslySetInnerHTML={{ __html: icon.svgPath }}
-        />
-      );
-    }
-
-    const LucideComponent = (LucideIcons as any)[icon.id];
-    if (!LucideComponent) return null;
-
-    if (selectedStyle === 'solid') {
-      return (
-        <div style={{ color: iconColor }}>
-          <LucideComponent
-            size={26}
-            color={iconColor}
-            fill={iconColor}
-            strokeWidth={0.5}
-          />
-        </div>
-      );
-    }
-
-    if (selectedStyle === 'duotone') {
-      return (
-        <div className="relative">
-          <LucideComponent
-            size={26}
-            color={secondaryColor}
-            strokeWidth={strokeWidth}
-            className="opacity-30 absolute inset-0 scale-105"
-          />
-          <LucideComponent
-            size={26}
-            color={iconColor}
-            strokeWidth={strokeWidth}
-            className="relative z-10"
-          />
-        </div>
-      );
-    }
-
-    if (selectedStyle === 'modern3d') {
-      return (
-        <div className="p-2 rounded-lg bg-zinc-800/80 border border-zinc-700/60 shadow-md">
-          <LucideComponent
-            size={22}
-            color={iconColor}
-            strokeWidth={strokeWidth}
-          />
-        </div>
-      );
-    }
+  // Render icon inside the card matching selected style (WYSIWYG from figmaBridge engine)
+  const renderIconPreview = (icon: IconItem, previewSize = 26) => {
+    const markup = generateStyledSvgMarkup(icon, {
+      style: selectedStyle,
+      strokeWidth,
+      color: iconColor,
+      secondaryColor,
+      size: previewSize,
+    });
 
     return (
-      <LucideComponent
-        size={26}
-        color={iconColor}
-        strokeWidth={strokeWidth}
+      <div
+        className="flex items-center justify-center shrink-0 pointer-events-none"
+        style={{ width: previewSize, height: previewSize }}
+        dangerouslySetInnerHTML={{ __html: markup }}
       />
     );
   };
@@ -512,14 +460,19 @@ export const IconsLibraryView: React.FC = () => {
             <div className="flex flex-wrap gap-1">
               {DESIGNER_COLORS.map((c) => (
                 <button
-                  key={c.color}
+                  key={c.name}
                   onClick={() => {
                     setIconColor(c.color);
                     setSecondaryColor(c.secondary);
                   }}
-                  className="w-5 h-5 rounded-md border border-zinc-700 cursor-pointer hover:scale-110 transition-transform"
-                  style={{ backgroundColor: c.color }}
-                  title={c.name}
+                  className="w-5 h-5 rounded-md border border-zinc-700 cursor-pointer hover:scale-110 transition-transform shadow-xs"
+                  style={{
+                    background:
+                      selectedStyle === 'duotone'
+                        ? `linear-gradient(135deg, ${c.color} 50%, ${c.secondary} 50%)`
+                        : c.color,
+                  }}
+                  title={`${c.name} (Primární: ${c.color}, Sekundární: ${c.secondary})`}
                 />
               ))}
             </div>
@@ -808,8 +761,8 @@ export const IconsLibraryView: React.FC = () => {
 
             {/* Big Preview Area */}
             <div className="w-full h-36 bg-zinc-950 rounded-xl border border-zinc-800 flex items-center justify-center relative">
-              <div className="scale-150">
-                {renderIconPreview(selectedIcon)}
+              <div className="scale-125">
+                {renderIconPreview(selectedIcon, 40)}
               </div>
 
               <span className="absolute bottom-2 left-2 text-[10px] font-mono-nums text-zinc-500">
@@ -844,7 +797,7 @@ export const IconsLibraryView: React.FC = () => {
 
               {/* Tailwind CSS inline SVG */}
               <button
-                onClick={() => handleCopy('tailwind', generateTailwindSvgSnippet(selectedIcon))}
+                onClick={() => handleCopy('tailwind', generateTailwindSvgSnippet(selectedIcon, exportConfig))}
                 className="w-full py-2 px-3 text-xs font-medium text-zinc-300 hover:text-white bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/60 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors"
               >
                 {copiedType === 'tailwind' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <FileCode className="w-3.5 h-3.5 text-zinc-400" />}

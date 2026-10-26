@@ -4,6 +4,20 @@ Všechny významné změny v projektu GlyphFlow jsou zaznamenány v tomto dokume
 
 ## [Unreleased]
 
+### Přidáno & Vylepšeno (Knihovna ikon v1.3.2)
+- **Precizní Solid (Plná) engine pro ikony**:
+  - Vyřešena ztráta detailů a špatné překryvy: zavedena geometrická analýza SVG drah (`isPathClosedGeometry`) a výpočet přesných bounding boxů pro každý SVG element.
+  - Vytváření sloučených SVG compound paths s `fill-rule="evenodd"` pro tvary s vnitřními otvory (`Eye`, `Settings`, `Camera`, `Target`, `Disc` apod.), kde je střed skutečně transparentním vektorovým výřezem.
+  - Inteligentní **Contrast Knockout**: vnitřní detaily (ručičky hodin u `AlarmClock`, zaškrtávátko u `AlarmClockCheck`, stužka u `Album`, červený kříž u `Ambulance`, oči a úsměv u `Smile`) jsou automaticky vykresleny v kontrastní barvě podkladu, takže se už neslévají do bílého fleku.
+  - Otevřené tahy (`Code` závorky, `Plus`, `Search` rukojeť, `Activity` ekg křivka, `TrendingUp`) se v režimu Solid nepřevádí na trojúhelníkové tětivy, ale zachovávají si tučný, ostrý čárový tah (stroke 2.6px).
+- **Autentický Duotone (2-tón) engine**:
+  - Vyřešen problém "pouze bílých ikon": výchozí barevná paleta nyní páruje ostrou primární bílou linku se zářivou kyanidovou výplní (`#00F2FE`), která je na tmavém podkladu nepřehlédnutelná.
+  - Sekundární vrstva využívá 55% krytí pro uzavřená těla a chytré barevné akcenty pro vícedílné čárové ikony (např. šipka u `AArrowDown`, levá závorka u `Code`).
+  - Podpora dynamického split náhledu na paletových tlačítkách (lineární diagonální gradient zobrazující obě barvy současně).
+  - Přímá podpora URL parametru `?view=icons&style=solid` a `?view=icons&style=duotone`.
+- **100% WYSIWYG konzistence**:
+  - Náhled v mřížce knihovny ikon, zvětšený detail v modalu, export do schránky pro Figma (`Ctrl+V`), přímé stažení SVG, stažení PNG i hromadný ZIP export nyní sdílejí naprosto identický stylizovaný výstup bez rozporů.
+
 ### Přidáno
 - Inicializace nativní desktopové Windows 11 aplikace přes **Tauri 2** (`src-tauri`) s Rust backendem, přísným CSP a NSIS/MSI balíčky.
 - Skripty `npm run desktop:dev` a `npm run desktop:build` pro Windows aplikaci.
