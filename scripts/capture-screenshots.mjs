@@ -15,28 +15,36 @@ if (!fs.existsSync(outDir)) {
 const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
 
 const targets = [
-  { name: 'charmap.png', url: 'http://127.0.0.1:3000/?view=catalog' },
-  { name: 'icons.png', url: 'http://127.0.0.1:3000/?view=icons' },
-  { name: 'typography.png', url: 'http://127.0.0.1:3000/?view=typography' }
+  { name: 'charmap.png', url: 'http://127.0.0.1:3000/?view=catalog&theme=dark' },
+  { name: 'icons.png', url: 'http://127.0.0.1:3000/?view=icons&theme=dark' },
+  { name: 'typography.png', url: 'http://127.0.0.1:3000/?view=typography&theme=dark' },
+  { name: 'charmap_light.png', url: 'http://127.0.0.1:3000/?view=catalog&theme=light' },
+  { name: 'icons_light.png', url: 'http://127.0.0.1:3000/?view=icons&theme=light' },
+  { name: 'typography_light.png', url: 'http://127.0.0.1:3000/?view=typography&theme=light' }
 ];
 
 for (const target of targets) {
   const dest = path.join(outDir, target.name);
   console.log(`Capturing ${target.name} from ${target.url}...`);
-  execFileSync(edgePath, [
-    '--headless=new',
-    '--disable-gpu',
-    '--hide-scrollbars',
-    '--window-size=1280,840',
-    `--screenshot=${dest}`,
-    target.url
-  ], { stdio: 'pipe' });
+  try {
+    execFileSync(edgePath, [
+      '--headless=new',
+      '--disable-gpu',
+      '--hide-scrollbars',
+      '--window-size=1280,840',
+      '--virtual-time-budget=2500',
+      `--screenshot=${dest}`,
+      target.url
+    ], { stdio: 'pipe' });
 
-  if (fs.existsSync(dest)) {
-    const stat = fs.statSync(dest);
-    console.log(`✓ Saved ${target.name} (${stat.size} bytes)`);
-  } else {
-    console.error(`Failed to capture ${target.name}`);
+    if (fs.existsSync(dest)) {
+      const stat = fs.statSync(dest);
+      console.log(`✓ Saved ${target.name} (${stat.size} bytes)`);
+    } else {
+      console.error(`Failed to capture ${target.name}`);
+    }
+  } catch (err) {
+    console.error(`Error capturing ${target.name}:`, err.message);
   }
 }
 

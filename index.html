@@ -1,9 +1,26 @@
 <!doctype html>
-<html lang="cs" class="dark">
+<html lang="cs">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GlyphFlow - Moderní Mapa Znaků</title>
+    <script>
+      (function() {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const urlTheme = params.get('theme');
+          const savedTheme = localStorage.getItem('gf_theme');
+          const theme = urlTheme || savedTheme || 'dark';
+          if (theme === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+          } else {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta name="description" content="Profesionální offline mapa znaků s bleskovým vyhledáváním, exportem do SVG/PNG, lokální databází, historií a synchronizací." />
     <meta property="og:title" content="GlyphFlow - Moderní Mapa Znaků" />
     <meta property="og:description" content="Profesionální offline mapa znaků s bleskovým vyhledáváním, exportem do SVG/PNG, lokální databází, historií a synchronizací." />
@@ -18,7 +35,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="/fonts/fonts.css" />
   </head>
-  <body class="bg-[#121214] text-zinc-100 antialiased selection:bg-zinc-700 selection:text-white">
+  <body class="bg-zinc-50 text-zinc-900 dark:bg-[#121214] dark:text-zinc-100 antialiased selection:bg-zinc-200 dark:selection:bg-zinc-700 selection:text-zinc-900 dark:selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

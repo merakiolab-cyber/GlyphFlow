@@ -247,21 +247,21 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
   return (
     <div className="flex-1 w-full overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-zinc-950/60 border border-zinc-800/80 rounded-2xl p-5 backdrop-blur-sm">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800/80 rounded-2xl p-5 backdrop-blur-sm shadow-xs dark:shadow-none">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+          <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-600 dark:text-cyan-400">
             <Type className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-lg font-semibold text-white tracking-tight">
+              <h1 className="text-lg font-semibold text-zinc-950 dark:text-white tracking-tight">
                 Typografická analýza & OpenType Studio
               </h1>
-              <span className="px-2 py-0.5 text-[10px] font-mono bg-zinc-800 text-zinc-300 border border-zinc-700 rounded">
+              <span className="px-2 py-0.5 text-[10px] font-mono bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700 rounded">
                 OpenType v1.3
               </span>
             </div>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400">
               Interaktivní testování systémových fontů, ligatur, tabulárních čísel a stylistických sad v reálném čase
             </p>
           </div>
@@ -272,8 +272,8 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
             onClick={() => setIsCompareMode(!isCompareMode)}
             className={`px-3.5 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-2 cursor-pointer ${
               isCompareMode
-                ? 'bg-cyan-500 text-zinc-950 font-semibold'
-                : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800'
+                ? 'bg-cyan-600 dark:bg-cyan-500 text-white dark:text-zinc-950 font-semibold shadow-xs'
+                : 'bg-white hover:bg-zinc-100 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 border border-zinc-300 dark:border-zinc-800 shadow-xs dark:shadow-none'
             }`}
           >
             <Columns className="w-3.5 h-3.5" />
@@ -282,11 +282,11 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
 
           <button
             onClick={handleCopyCss}
-            className="px-3.5 py-2 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold rounded-lg text-xs transition-colors flex items-center gap-2 cursor-pointer"
+            className="px-3.5 py-2 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-200 dark:text-zinc-950 font-semibold rounded-lg text-xs transition-colors flex items-center gap-2 cursor-pointer shadow-xs"
           >
             {copiedCodeType === 'css' ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
                 <span>CSS zkopírováno!</span>
               </>
             ) : (
@@ -304,8 +304,8 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
         {/* LEFT COLUMN: OpenType Features & Font Controls (5 cols) */}
         <div className="lg:col-span-5 space-y-5">
           {/* Font Selection & System Font */}
-          <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 space-y-3">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+          <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 space-y-3 shadow-xs dark:shadow-none">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
               Výběr písma & Systémový font Windows
             </h3>
             <div className="space-y-2">
@@ -315,7 +315,7 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                   setSelectedFont(e.target.value);
                   setCustomFontName('');
                 }}
-                className="w-full bg-zinc-950 border border-zinc-800 text-white rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-cyan-500"
+                className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 text-zinc-900 dark:text-white rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-cyan-500"
               >
                 {FONTS_LIST.map((f) => (
                   <option key={f.name} value={f.family}>
@@ -330,17 +330,17 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                   placeholder="Nebo zadejte název fontu ve Windows (např. Cascadia Code, Fira Code)..."
                   value={customFontName}
                   onChange={(e) => setCustomFontName(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-800 text-xs text-white placeholder-zinc-500 rounded-lg px-3 py-2 focus:outline-none focus:border-cyan-500"
+                  className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 text-xs text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 rounded-lg px-3 py-2 focus:outline-none focus:border-cyan-500"
                 />
               </div>
             </div>
 
             {/* Sliders: Size, Line Height, Spacing */}
-            <div className="grid grid-cols-3 gap-3 pt-2 border-t border-zinc-800/80">
+            <div className="grid grid-cols-3 gap-3 pt-2 border-t border-zinc-200 dark:border-zinc-800/80">
               <div>
-                <div className="flex justify-between text-[11px] text-zinc-400 mb-1">
+                <div className="flex justify-between text-[11px] text-zinc-600 dark:text-zinc-400 mb-1">
                   <span>Velikost</span>
-                  <span className="font-mono text-white">{fontSize}px</span>
+                  <span className="font-mono text-zinc-900 dark:text-white font-medium">{fontSize}px</span>
                 </div>
                 <input
                   type="range"
@@ -348,13 +348,13 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                   max="72"
                   value={fontSize}
                   onChange={(e) => setFontSize(Number(e.target.value))}
-                  className="w-full accent-cyan-400 cursor-pointer"
+                  className="w-full accent-cyan-500 dark:accent-cyan-400 cursor-pointer"
                 />
               </div>
               <div>
-                <div className="flex justify-between text-[11px] text-zinc-400 mb-1">
+                <div className="flex justify-between text-[11px] text-zinc-600 dark:text-zinc-400 mb-1">
                   <span>Výška řádku</span>
-                  <span className="font-mono text-white">{lineHeight}</span>
+                  <span className="font-mono text-zinc-900 dark:text-white font-medium">{lineHeight}</span>
                 </div>
                 <input
                   type="range"
@@ -363,13 +363,13 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                   step="0.1"
                   value={lineHeight}
                   onChange={(e) => setLineHeight(Number(e.target.value))}
-                  className="w-full accent-cyan-400 cursor-pointer"
+                  className="w-full accent-cyan-500 dark:accent-cyan-400 cursor-pointer"
                 />
               </div>
               <div>
-                <div className="flex justify-between text-[11px] text-zinc-400 mb-1">
+                <div className="flex justify-between text-[11px] text-zinc-600 dark:text-zinc-400 mb-1">
                   <span>Prostrkání</span>
-                  <span className="font-mono text-white">{letterSpacing}px</span>
+                  <span className="font-mono text-zinc-900 dark:text-white font-medium">{letterSpacing}px</span>
                 </div>
                 <input
                   type="range"
@@ -377,21 +377,21 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                   max="6"
                   value={letterSpacing}
                   onChange={(e) => setLetterSpacing(Number(e.target.value))}
-                  className="w-full accent-cyan-400 cursor-pointer"
+                  className="w-full accent-cyan-500 dark:accent-cyan-400 cursor-pointer"
                 />
               </div>
             </div>
           </div>
 
           {/* OpenType Features Toggles by Category */}
-          <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 space-y-4">
+          <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 space-y-4 shadow-xs dark:shadow-none">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                 OpenType funkce ({features.filter((f) => f.enabled).length} aktivních)
               </h3>
               <button
                 onClick={handleResetFeatures}
-                className="text-[11px] text-zinc-500 hover:text-zinc-300 transition-colors flex items-center gap-1 cursor-pointer"
+                className="text-[11px] text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors flex items-center gap-1 cursor-pointer"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Reset</span>
@@ -405,20 +405,20 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                   onClick={() => toggleFeature(feature.tag)}
                   className={`p-3 rounded-lg border transition-all cursor-pointer flex items-start justify-between gap-3 ${
                     feature.enabled
-                      ? 'bg-cyan-950/20 border-cyan-500/40'
-                      : 'bg-zinc-950/60 border-zinc-800/80 hover:border-zinc-700'
+                      ? 'bg-cyan-50 dark:bg-cyan-950/20 border-cyan-300 dark:border-cyan-500/40 shadow-2xs'
+                      : 'bg-zinc-50/80 hover:bg-zinc-100/80 dark:bg-zinc-950/60 dark:hover:bg-zinc-900 border-zinc-200 dark:border-zinc-800/80'
                   }`}
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold px-1.5 py-0.5 rounded bg-zinc-800 text-cyan-300">
+                      <span className="font-mono text-xs font-bold px-1.5 py-0.5 rounded bg-zinc-200 text-zinc-800 dark:bg-zinc-800 dark:text-cyan-300">
                         {feature.tag}
                       </span>
-                      <span className="text-xs font-semibold text-white">
+                      <span className="text-xs font-semibold text-zinc-900 dark:text-white">
                         {feature.name}
                       </span>
                     </div>
-                    <p className="text-[11px] text-zinc-400 leading-relaxed">
+                    <p className="text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -427,8 +427,8 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                     <div
                       className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${
                         feature.enabled
-                          ? 'bg-cyan-500 border-cyan-400 text-zinc-950'
-                          : 'border-zinc-700 bg-zinc-900'
+                          ? 'bg-cyan-600 border-cyan-600 text-white dark:bg-cyan-500 dark:border-cyan-400 dark:text-zinc-950'
+                          : 'border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-900'
                       }`}
                     >
                       {feature.enabled && <Check className="w-3 h-3 stroke-[3]" />}
@@ -444,15 +444,15 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
         <div className="lg:col-span-7 space-y-5">
           {/* Presets Bar */}
           <div className="flex items-center gap-2 overflow-x-auto py-1">
-            <span className="text-xs text-zinc-500 shrink-0">Předvolby:</span>
+            <span className="text-xs text-zinc-600 dark:text-zinc-500 shrink-0">Předvolby:</span>
             {PRESET_TEXTS.map((preset) => (
               <button
                 key={preset.id}
                 onClick={() => setSampleText(preset.text)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer whitespace-nowrap ${
                   sampleText === preset.text
-                    ? 'bg-zinc-100 text-zinc-900 font-semibold'
-                    : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
+                    ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 font-semibold shadow-xs'
+                    : 'bg-white hover:bg-zinc-100 text-zinc-700 hover:text-zinc-950 border border-zinc-300 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 dark:border-zinc-800 shadow-xs dark:shadow-none'
                 }`}
               >
                 {preset.title}
@@ -461,10 +461,10 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
           </div>
 
           {/* Live Preview Box */}
-          <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl overflow-hidden flex flex-col">
-            <div className="px-4 py-2.5 border-b border-zinc-800 bg-zinc-950 flex items-center justify-between text-xs text-zinc-400">
+          <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden flex flex-col shadow-xs dark:shadow-none">
+            <div className="px-4 py-2.5 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 flex items-center justify-between text-xs text-zinc-600 dark:text-zinc-400">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-cyan-400" />
+                <span className="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400" />
                 <span className="font-mono">Písmo: {activeFontFamily}</span>
               </div>
               <div className="font-mono text-[11px] text-zinc-500 truncate max-w-xs">
@@ -474,9 +474,9 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
 
             {/* Split Comparison or Single View */}
             {isCompareMode ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-zinc-800 min-h-[300px]">
+              <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-zinc-200 dark:divide-zinc-800 min-h-[300px]">
                 {/* Standard / Raw */}
-                <div className="p-5 space-y-2 bg-zinc-950/40">
+                <div className="p-5 space-y-2 bg-white dark:bg-zinc-950/40">
                   <div className="text-[10px] font-mono uppercase tracking-wider text-zinc-500">
                     Výchozí vykreslení (Bez OpenType)
                   </div>
@@ -488,7 +488,7 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                       letterSpacing: `${letterSpacing}px`,
                       fontFeatureSettings: 'normal',
                     }}
-                    className="text-white whitespace-pre-wrap select-text focus:outline-none"
+                    className="text-zinc-900 dark:text-white whitespace-pre-wrap select-text focus:outline-none"
                     contentEditable
                     suppressContentEditableWarning
                     onBlur={(e) => setSampleText(e.currentTarget.innerText)}
@@ -498,8 +498,8 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                 </div>
 
                 {/* Enhanced with OpenType */}
-                <div className="p-5 space-y-2 bg-zinc-950/80">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+                <div className="p-5 space-y-2 bg-cyan-50/40 dark:bg-zinc-950/80">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-cyan-700 dark:text-cyan-400 flex items-center gap-1.5">
                     <Sparkles className="w-3 h-3" />
                     <span>Aktivní OpenType funkce</span>
                   </div>
@@ -511,7 +511,7 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                       letterSpacing: `${letterSpacing}px`,
                       fontFeatureSettings: fontFeatureSettingsCss,
                     }}
-                    className="text-cyan-50 whitespace-pre-wrap select-text focus:outline-none"
+                    className="text-cyan-950 dark:text-cyan-50 whitespace-pre-wrap select-text focus:outline-none font-medium"
                     contentEditable
                     suppressContentEditableWarning
                     onBlur={(e) => setSampleText(e.currentTarget.innerText)}
@@ -521,7 +521,7 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                 </div>
               </div>
             ) : (
-              <div className="p-6 min-h-[300px] bg-zinc-950/80 flex flex-col justify-center">
+              <div className="p-6 min-h-[300px] bg-white dark:bg-zinc-950/80 flex flex-col justify-center">
                 <div
                   style={{
                     fontFamily: activeFontFamily,
@@ -530,7 +530,7 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                     letterSpacing: `${letterSpacing}px`,
                     fontFeatureSettings: fontFeatureSettingsCss,
                   }}
-                  className="text-white whitespace-pre-wrap select-text focus:outline-none"
+                  className="text-zinc-900 dark:text-white whitespace-pre-wrap select-text focus:outline-none"
                   contentEditable
                   suppressContentEditableWarning
                   onBlur={(e) => setSampleText(e.currentTarget.innerText)}
@@ -540,11 +540,11 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
               </div>
             )}
 
-            <div className="px-4 py-2 bg-zinc-950/60 border-t border-zinc-800 flex items-center justify-between text-[11px] text-zinc-500">
+            <div className="px-4 py-2 bg-zinc-50 dark:bg-zinc-950/60 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between text-[11px] text-zinc-500">
               <span>Text výše lze přímo upravovat kliknutím a psaním.</span>
               <button
                 onClick={() => setSampleText('')}
-                className="hover:text-zinc-300 transition-colors cursor-pointer"
+                className="hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors cursor-pointer"
               >
                 Vymazat text
               </button>
@@ -553,9 +553,9 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
 
           {/* Deep Glyph Metrics & Anatomy Diagram */}
           {inspectedMetrics && (
-            <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 space-y-4">
+            <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 space-y-4 shadow-xs dark:shadow-none">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                   Anatomie & Metriky znaku
                 </h3>
                 <div className="flex items-center gap-2">
@@ -567,8 +567,8 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                         onClick={() => setInspectedChar(c)}
                         className={`w-6 h-6 rounded text-xs font-mono transition-colors cursor-pointer flex items-center justify-center ${
                           inspectedChar === c
-                            ? 'bg-cyan-500 text-zinc-950 font-bold'
-                            : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'
+                            ? 'bg-cyan-600 text-white dark:bg-cyan-500 dark:text-zinc-950 font-bold shadow-xs'
+                            : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200 border border-zinc-300 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:border-transparent'
                         }`}
                       >
                         {c}
@@ -579,21 +579,21 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
               </div>
 
               {/* Visual Baseline & Anatomy Diagram */}
-              <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-6 relative overflow-hidden flex items-center justify-center min-h-[160px]">
+              <div className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 relative overflow-hidden flex items-center justify-center min-h-[160px]">
                 {/* Horizontal Typography Guide Lines */}
-                <div className="absolute inset-x-4 top-[25%] border-b border-dashed border-red-500/40 flex justify-between text-[9px] font-mono text-red-400 px-2 pointer-events-none">
+                <div className="absolute inset-x-4 top-[25%] border-b border-dashed border-red-500/50 flex justify-between text-[9px] font-mono text-red-600 dark:text-red-400 px-2 pointer-events-none">
                   <span>Ascender / Verzálky</span>
                   <span>+750</span>
                 </div>
-                <div className="absolute inset-x-4 top-[40%] border-b border-dashed border-amber-500/40 flex justify-between text-[9px] font-mono text-amber-400 px-2 pointer-events-none">
+                <div className="absolute inset-x-4 top-[40%] border-b border-dashed border-amber-500/50 flex justify-between text-[9px] font-mono text-amber-600 dark:text-amber-400 px-2 pointer-events-none">
                   <span>Střední výška (X-Height)</span>
                   <span>+500</span>
                 </div>
-                <div className="absolute inset-x-4 top-[70%] border-b border-cyan-500/60 flex justify-between text-[9px] font-mono text-cyan-400 px-2 pointer-events-none">
+                <div className="absolute inset-x-4 top-[70%] border-b border-cyan-500/80 flex justify-between text-[9px] font-mono text-cyan-600 dark:text-cyan-400 px-2 pointer-events-none">
                   <span>Základní dotažnice (Baseline)</span>
                   <span>0</span>
                 </div>
-                <div className="absolute inset-x-4 top-[88%] border-b border-dashed border-indigo-500/40 flex justify-between text-[9px] font-mono text-indigo-400 px-2 pointer-events-none">
+                <div className="absolute inset-x-4 top-[88%] border-b border-dashed border-indigo-500/50 flex justify-between text-[9px] font-mono text-indigo-600 dark:text-indigo-400 px-2 pointer-events-none">
                   <span>Dolní dotažnice (Descender)</span>
                   <span>-250</span>
                 </div>
@@ -604,7 +604,7 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
                     fontFamily: activeFontFamily,
                     fontFeatureSettings: fontFeatureSettingsCss,
                   }}
-                  className="text-8xl font-normal text-white select-none z-10 transition-all drop-shadow-lg"
+                  className="text-8xl font-normal text-zinc-950 dark:text-white select-none z-10 transition-all drop-shadow-sm"
                 >
                   {inspectedMetrics.char}
                 </div>
@@ -612,30 +612,30 @@ font-variant-ligatures: ${features.find(f => f.tag === 'liga')?.enabled ? 'commo
 
               {/* Data Table */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                <div className="p-3 bg-zinc-950 rounded-lg border border-zinc-800/80">
+                <div className="p-3 bg-zinc-50 dark:bg-zinc-950 rounded-lg border border-zinc-200 dark:border-zinc-800/80">
                   <div className="text-zinc-500 text-[10px]">Unicode CodePoint</div>
-                  <div className="font-mono text-cyan-400 font-semibold mt-1">
+                  <div className="font-mono text-cyan-600 dark:text-cyan-400 font-semibold mt-1">
                     {inspectedMetrics.hex} ({inspectedMetrics.dec})
                   </div>
                 </div>
 
-                <div className="p-3 bg-zinc-950 rounded-lg border border-zinc-800/80">
+                <div className="p-3 bg-zinc-50 dark:bg-zinc-950 rounded-lg border border-zinc-200 dark:border-zinc-800/80">
                   <div className="text-zinc-500 text-[10px]">Unicode Blok</div>
-                  <div className="text-zinc-200 font-medium truncate mt-1">
+                  <div className="text-zinc-800 dark:text-zinc-200 font-medium truncate mt-1">
                     {inspectedMetrics.block}
                   </div>
                 </div>
 
-                <div className="p-3 bg-zinc-950 rounded-lg border border-zinc-800/80">
+                <div className="p-3 bg-zinc-50 dark:bg-zinc-950 rounded-lg border border-zinc-200 dark:border-zinc-800/80">
                   <div className="text-zinc-500 text-[10px]">UTF-8 Byte Sequence</div>
-                  <div className="font-mono text-emerald-400 mt-1">
+                  <div className="font-mono text-emerald-600 dark:text-emerald-400 mt-1">
                     {inspectedMetrics.bytes}
                   </div>
                 </div>
 
-                <div className="p-3 bg-zinc-950 rounded-lg border border-zinc-800/80">
+                <div className="p-3 bg-zinc-50 dark:bg-zinc-950 rounded-lg border border-zinc-200 dark:border-zinc-800/80">
                   <div className="text-zinc-500 text-[10px]">CSS Escape / Entity</div>
-                  <div className="font-mono text-zinc-300 truncate mt-1">
+                  <div className="font-mono text-zinc-700 dark:text-zinc-300 truncate mt-1">
                     {inspectedMetrics.cssEsc}
                   </div>
                 </div>

@@ -93,21 +93,21 @@ export const SyncView: React.FC<SyncModalProps> = ({
   return (
     <div className="space-y-6 max-w-4xl mx-auto w-full">
       {/* Header */}
-      <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
+      <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-800">
         <div className="flex items-center gap-3">
           <button
             onClick={onBackToCatalog}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
             title="Zpět do katalogu"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
-            <h2 className="text-sm font-semibold text-white flex items-center gap-2">
-              <Database className="w-4 h-4 text-zinc-400" />
+            <h2 className="text-sm font-semibold text-zinc-950 dark:text-white flex items-center gap-2">
+              <Database className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
               <span>Lokální databáze & Záloha</span>
             </h2>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">
               Přenos dat a offline záloha mezi zařízeními
             </p>
           </div>
@@ -115,36 +115,36 @@ export const SyncView: React.FC<SyncModalProps> = ({
       </div>
 
       {syncStatus && (
-        <div className="p-3 bg-zinc-900 border border-zinc-700 rounded-xl flex items-center gap-2.5 text-xs text-zinc-200">
-          <Check className="w-4 h-4 shrink-0 text-emerald-400" />
+        <div className="p-3 bg-emerald-50 dark:bg-zinc-900 border border-emerald-200 dark:border-zinc-700 rounded-xl flex items-center gap-2.5 text-xs text-emerald-800 dark:text-zinc-200 shadow-2xs">
+          <Check className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <span>{syncStatus}</span>
         </div>
       )}
 
       {errorMsg && (
-        <div className="p-3 bg-zinc-900 border border-rose-800/80 rounded-xl flex items-center gap-2.5 text-xs text-rose-300">
-          <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+        <div className="p-3 bg-rose-50 dark:bg-zinc-900 border border-rose-200 dark:border-rose-800/80 rounded-xl flex items-center gap-2.5 text-xs text-rose-800 dark:text-rose-300 shadow-2xs">
+          <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400" />
           <span>{errorMsg}</span>
         </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Card 1: Export */}
-        <div className="p-5 bg-zinc-900/40 border border-zinc-800 rounded-xl flex flex-col justify-between space-y-4">
+        <div className="p-5 bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col justify-between space-y-4 shadow-xs dark:shadow-none">
           <div>
-            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-300 mb-3">
+            <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-transparent flex items-center justify-center text-zinc-700 dark:text-zinc-300 mb-3 shadow-2xs">
               <Download className="w-4 h-4" />
             </div>
-            <h3 className="text-sm font-medium text-white mb-1">
+            <h3 className="text-sm font-semibold text-zinc-950 dark:text-white mb-1">
               Exportovat zálohu (JSON)
             </h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               Stáhněte si kompletní offline zálohu oblíbených položek, historie a nastavení.
             </p>
           </div>
           <button
             onClick={handleExportBackup}
-            className="w-full py-2 px-3 text-xs font-medium text-zinc-950 bg-zinc-100 hover:bg-white rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-2"
+            className="w-full py-2 px-3 text-xs font-semibold text-white bg-zinc-900 hover:bg-zinc-800 dark:text-zinc-950 dark:bg-zinc-100 dark:hover:bg-white rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-xs"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Stáhnout soubor .JSON</span>
@@ -152,15 +152,15 @@ export const SyncView: React.FC<SyncModalProps> = ({
         </div>
 
         {/* Card 2: Import */}
-        <div className="p-5 bg-zinc-900/40 border border-zinc-800 rounded-xl flex flex-col justify-between space-y-4">
+        <div className="p-5 bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col justify-between space-y-4 shadow-xs dark:shadow-none">
           <div>
-            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-300 mb-3">
+            <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-transparent flex items-center justify-center text-zinc-700 dark:text-zinc-300 mb-3 shadow-2xs">
               <Upload className="w-4 h-4" />
             </div>
-            <h3 className="text-sm font-medium text-white mb-1">
+            <h3 className="text-sm font-semibold text-zinc-950 dark:text-white mb-1">
               Obnovit ze zálohy (JSON)
             </h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               Nahrajte dříve uložený soubor se zálohou a obnovte svá data.
             </p>
           </div>
@@ -175,51 +175,51 @@ export const SyncView: React.FC<SyncModalProps> = ({
 
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="w-full py-2 px-3 text-xs font-medium text-zinc-300 hover:text-white bg-zinc-800 hover:bg-zinc-750 border border-zinc-700/60 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-2"
+            className="w-full py-2 px-3 text-xs font-medium text-zinc-700 hover:text-zinc-950 bg-white hover:bg-zinc-100 border border-zinc-300 dark:text-zinc-300 dark:hover:text-white dark:bg-zinc-800 dark:hover:bg-zinc-750 dark:border-zinc-700/60 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-xs dark:shadow-none"
           >
-            <Upload className="w-3.5 h-3.5 text-zinc-400" />
+            <Upload className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
             <span>Vybrat soubor...</span>
           </button>
         </div>
 
         {/* Card 3: Shareable link */}
-        <div className="p-5 bg-zinc-900/40 border border-zinc-800 rounded-xl flex flex-col justify-between space-y-4">
+        <div className="p-5 bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col justify-between space-y-4 shadow-xs dark:shadow-none">
           <div>
-            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-300 mb-3">
+            <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-transparent flex items-center justify-center text-zinc-700 dark:text-zinc-300 mb-3 shadow-2xs">
               <Share2 className="w-4 h-4" />
             </div>
-            <h3 className="text-sm font-medium text-white mb-1">
+            <h3 className="text-sm font-semibold text-zinc-950 dark:text-white mb-1">
               Synchronizační odkaz
             </h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               Vygenerujte rychlý odkaz obsahující oblíbené znaky pro otevření na jiném zařízení.
             </p>
           </div>
           <button
             onClick={handleGenerateShareLink}
-            className="w-full py-2 px-3 text-xs font-medium text-zinc-300 hover:text-white bg-zinc-800 hover:bg-zinc-750 border border-zinc-700/60 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-2"
+            className="w-full py-2 px-3 text-xs font-medium text-zinc-700 hover:text-zinc-950 bg-white hover:bg-zinc-100 border border-zinc-300 dark:text-zinc-300 dark:hover:text-white dark:bg-zinc-800 dark:hover:bg-zinc-750 dark:border-zinc-700/60 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-xs dark:shadow-none"
           >
-            {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copiedLink ? 'Odkaz zkopírován!' : 'Kopírovat odkaz'}</span>
           </button>
         </div>
 
         {/* Card 4: Clear */}
-        <div className="p-5 bg-zinc-900/40 border border-zinc-800 rounded-xl flex flex-col justify-between space-y-4">
+        <div className="p-5 bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-xl flex flex-col justify-between space-y-4 shadow-xs dark:shadow-none">
           <div>
-            <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-300 mb-3">
+            <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-transparent flex items-center justify-center text-zinc-700 dark:text-zinc-300 mb-3 shadow-2xs">
               <RefreshCw className="w-4 h-4" />
             </div>
-            <h3 className="text-sm font-medium text-white mb-1">
+            <h3 className="text-sm font-semibold text-zinc-950 dark:text-white mb-1">
               Vyčištění lokálních dat
             </h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
               Reset lokální databáze na výchozí prázdný stav.
             </p>
           </div>
           <button
             onClick={handleClearAll}
-            className="w-full py-2 px-3 text-xs font-medium text-rose-400 hover:text-rose-300 bg-rose-950/20 hover:bg-rose-950/40 border border-rose-900/40 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-2"
+            className="w-full py-2 px-3 text-xs font-medium text-rose-700 hover:text-rose-800 bg-rose-50 hover:bg-rose-100 border border-rose-200 dark:text-rose-400 dark:hover:text-rose-300 dark:bg-rose-950/20 dark:hover:bg-rose-950/40 dark:border-rose-900/40 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-xs dark:shadow-none"
           >
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>Vymazat data</span>

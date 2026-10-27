@@ -27,9 +27,9 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
   const byteCount = new TextEncoder().encode(value).length;
 
   return (
-    <div className="w-full bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-3.5 space-y-2.5">
+    <div className="w-full bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800/80 rounded-xl p-3.5 space-y-2.5 shadow-xs dark:shadow-none">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-medium text-zinc-300">
+        <h3 className="text-xs font-semibold text-zinc-800 dark:text-zinc-300">
           Textová schránka pro skládání znaků
         </h3>
 
@@ -46,7 +46,7 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
           onChange={(e) => onChange(e.target.value)}
           placeholder="Kliknutím na znaky v mřížce nebo tlačítko '+' sem přidáte symboly k hromadnému zkopírování..."
           rows={2}
-          className="w-full py-2 px-3 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-100 placeholder-zinc-500 font-sans text-sm focus:border-zinc-600 focus:outline-none resize-none transition-colors"
+          className="w-full py-2 px-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 font-sans text-sm focus:border-cyan-500 dark:focus:border-zinc-600 focus:outline-none resize-none transition-colors"
         />
       </div>
 
@@ -54,7 +54,7 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
         <button
           onClick={onClear}
           disabled={!value}
-          className="flex items-center gap-1.5 px-2.5 py-1 text-xs text-zinc-400 hover:text-rose-400 rounded-md transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+          className="flex items-center gap-1.5 px-2.5 py-1 text-xs text-zinc-500 hover:text-rose-600 dark:text-zinc-400 dark:hover:text-rose-400 rounded-md transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <Trash2 className="w-3.5 h-3.5" />
           <span>Vymazat</span>
@@ -64,17 +64,17 @@ export const Scratchpad: React.FC<ScratchpadProps> = ({
           <button
             onClick={() => onOpenExport(value)}
             disabled={!value}
-            className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-zinc-300 hover:text-white bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/60 rounded-lg transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-zinc-700 hover:text-zinc-950 bg-zinc-100 hover:bg-zinc-200 dark:text-zinc-300 dark:hover:text-white dark:bg-zinc-800/60 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-700/60 rounded-lg transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shadow-xs dark:shadow-none"
             title="Exportovat jako SVG / PNG"
           >
-            <Download className="w-3.5 h-3.5 text-zinc-400" />
+            <Download className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
             <span>Export grafiky</span>
           </button>
 
           <button
             onClick={handleCopyAll}
             disabled={!value}
-            className="flex items-center gap-1.5 px-3.5 py-1 text-xs font-medium text-zinc-950 bg-zinc-100 hover:bg-white rounded-lg transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex items-center gap-1.5 px-3.5 py-1 text-xs font-medium text-white bg-zinc-900 hover:bg-black dark:text-zinc-950 dark:bg-zinc-100 dark:hover:bg-white rounded-lg transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shadow-xs"
           >
             {copied ? (
               <>

@@ -175,48 +175,48 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 dark:bg-black/75 backdrop-blur-sm animate-in fade-in duration-150">
       <div
-        className="w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
+        className="w-full max-w-4xl bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800/80 bg-zinc-900/40 shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-zinc-800/80 bg-zinc-50 dark:bg-zinc-900/40 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700/80 flex items-center justify-center text-zinc-200">
+            <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/80 flex items-center justify-center text-zinc-700 dark:text-zinc-200">
               <Folder className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-semibold text-white tracking-tight">
+                <h2 className="text-base font-semibold text-zinc-950 dark:text-white tracking-tight">
                   Správce vlastních sad ikon
                 </h2>
-                <span className="px-2 py-0.5 text-[10px] font-mono bg-zinc-800 text-zinc-300 border border-zinc-700 rounded">
+                <span className="px-2 py-0.5 text-[10px] font-mono bg-zinc-100 text-zinc-700 border border-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700 rounded">
                   {customIcons.length} ikon uloženo v IndexedDB
                 </span>
               </div>
-              <p className="text-xs text-zinc-400">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 Nahrávejte a organizujte vlastní SVG balíčky do lokální databáze s plnou offline podporou
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors flex items-center justify-center cursor-pointer"
+            className="w-8 h-8 rounded-lg text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex items-center justify-center cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Action Controls & Collection Selector */}
-        <div className="px-6 py-3 border-b border-zinc-800/80 bg-zinc-900/20 flex flex-wrap items-center justify-between gap-3 shrink-0">
+        <div className="px-6 py-3 border-b border-zinc-200 dark:border-zinc-800/80 bg-zinc-50/50 dark:bg-zinc-900/20 flex flex-wrap items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-2 overflow-x-auto py-1">
             <button
               onClick={() => setSelectedCollection('Všechny sady')}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer whitespace-nowrap ${
                 selectedCollection === 'Všechny sady'
-                  ? 'bg-zinc-100 text-zinc-900 font-semibold'
-                  : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
+                  ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 font-semibold shadow-xs'
+                  : 'bg-white hover:bg-zinc-100 text-zinc-700 hover:text-zinc-950 border border-zinc-300 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 dark:border-zinc-800 shadow-xs dark:shadow-none'
               }`}
             >
               Všechny sady ({customIcons.length})
@@ -229,8 +229,8 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
                   onClick={() => setSelectedCollection(col)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                     selectedCollection === col
-                      ? 'bg-zinc-100 text-zinc-900 font-semibold'
-                      : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
+                      ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 font-semibold shadow-xs'
+                      : 'bg-white hover:bg-zinc-100 text-zinc-700 hover:text-zinc-950 border border-zinc-300 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 dark:border-zinc-800 shadow-xs dark:shadow-none'
                   }`}
                 >
                   <Folder className="w-3 h-3 text-zinc-400" />
@@ -245,7 +245,7 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
             {customIcons.length > 0 && (
               <button
                 onClick={handleExportJson}
-                className="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-1.5 bg-white hover:bg-zinc-100 border border-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:border-zinc-800 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs dark:shadow-none"
                 title="Zálohovat vlastní ikony jako JSON"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -256,7 +256,7 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
             {selectedCollection !== 'Všechny sady' && (
               <button
                 onClick={handleDeleteCurrentCollection}
-                className="px-3 py-1.5 bg-red-950/40 hover:bg-red-900/60 border border-red-800/50 text-red-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 dark:border-rose-800/50 dark:text-rose-300 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs dark:shadow-none"
                 title="Smazat tuto sadu"
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -269,21 +269,21 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
         {/* Drop zone & Upload Area */}
         <div className="p-6 overflow-y-auto flex-1 space-y-6">
           {/* Curated Pre-built Packs Showcase */}
-          <div className="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 space-y-3">
+          <div className="bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <h3 className="text-xs font-semibold text-zinc-200 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+                <h3 className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                   <span>Doporučené kurátorské sady GlyphFlow</span>
                 </h3>
-                <p className="text-[11px] text-zinc-400 mt-0.5">
+                <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-0.5">
                   Ručně navržené vektorové ikony pro Finance & Krypto, Software/IT a Umělou inteligenci.
                 </p>
               </div>
               <button
                 onClick={handleInstallAllCuratedSets}
                 disabled={isProcessing}
-                className="px-3 py-1.5 text-xs font-semibold text-zinc-950 bg-cyan-400 hover:bg-cyan-300 disabled:opacity-50 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 self-start sm:self-auto"
+                className="px-3 py-1.5 text-xs font-semibold text-white dark:text-zinc-950 bg-cyan-600 hover:bg-cyan-500 dark:bg-cyan-400 dark:hover:bg-cyan-300 disabled:opacity-50 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 shrink-0 self-start sm:self-auto shadow-xs"
               >
                 <Zap className="w-3.5 h-3.5" />
                 <span>Nainstalovat všech 36 ikon</span>
@@ -298,29 +298,29 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
                 return (
                   <div
                     key={cSet.id}
-                    className="p-3 bg-zinc-950/70 border border-zinc-800/80 rounded-lg flex flex-col justify-between space-y-2.5"
+                    className="p-3 bg-white dark:bg-zinc-950/70 border border-zinc-200 dark:border-zinc-800/80 rounded-lg flex flex-col justify-between space-y-2.5 shadow-2xs"
                   >
                     <div>
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-medium text-white truncate">
+                        <span className="text-xs font-semibold text-zinc-900 dark:text-white truncate">
                           {cSet.name}
                         </span>
-                        <span className="text-[10px] font-mono text-zinc-400 bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800">
+                        <span className="text-[10px] font-mono text-zinc-600 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-200 dark:border-zinc-800">
                           {cSet.badge}
                         </span>
                       </div>
-                      <p className="text-[11px] text-zinc-400 mt-1 line-clamp-2">
+                      <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-1 line-clamp-2">
                         {cSet.description}
                       </p>
                     </div>
 
-                    <div className="flex items-center justify-between pt-1 border-t border-zinc-900">
+                    <div className="flex items-center justify-between pt-1 border-t border-zinc-100 dark:border-zinc-900">
                       {/* Mini Preview Icons */}
                       <div className="flex items-center -space-x-1.5">
                         {cSet.icons.slice(0, 4).map((icon) => (
                           <div
                             key={icon.id}
-                            className="w-5 h-5 rounded-md bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 p-0.5 shadow-xs"
+                            className="w-5 h-5 rounded-md bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center text-zinc-800 dark:text-zinc-300 p-0.5 shadow-xs"
                             dangerouslySetInnerHTML={{
                               __html: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full">${icon.svgContent}</svg>`,
                             }}
@@ -333,13 +333,13 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
                         disabled={isProcessing}
                         className={`px-2 py-1 text-[11px] font-medium rounded transition-colors cursor-pointer flex items-center gap-1 ${
                           isAlreadyInstalled
-                            ? 'text-emerald-400 bg-emerald-950/40 border border-emerald-800/50'
-                            : 'text-zinc-300 hover:text-white bg-zinc-850 hover:bg-zinc-800 border border-zinc-750'
+                            ? 'text-emerald-700 bg-emerald-50 border border-emerald-200 dark:text-emerald-400 dark:bg-emerald-950/40 dark:border-emerald-800/50'
+                            : 'text-zinc-700 hover:text-zinc-950 bg-zinc-100 hover:bg-zinc-200 border border-zinc-300 dark:text-zinc-300 dark:hover:text-white dark:bg-zinc-850 dark:hover:bg-zinc-800 dark:border-zinc-750'
                         }`}
                       >
                         {isAlreadyInstalled ? (
                           <>
-                            <Check className="w-3 h-3 text-emerald-400" />
+                            <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                             <span>Uloženo</span>
                           </>
                         ) : (
@@ -364,8 +364,8 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
             onDrop={handleDrop}
             className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-colors cursor-pointer ${
               isDragging
-                ? 'border-cyan-400 bg-cyan-950/10'
-                : 'border-zinc-800 hover:border-zinc-700 bg-zinc-900/20'
+                ? 'border-cyan-500 bg-cyan-50/50 dark:border-cyan-400 dark:bg-cyan-950/10'
+                : 'border-zinc-300 hover:border-zinc-400 bg-zinc-50/50 dark:border-zinc-800 dark:hover:border-zinc-700 dark:bg-zinc-900/20'
             }`}
             onClick={() => fileInputRef.current?.click()}
           >
@@ -377,16 +377,16 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
               multiple
               className="hidden"
             />
-            <div className="w-12 h-12 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 mb-3">
+            <div className="w-12 h-12 rounded-full bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 flex items-center justify-center text-zinc-700 dark:text-zinc-300 mb-3 shadow-xs">
               <Upload className="w-6 h-6" />
             </div>
-            <h3 className="text-sm font-semibold text-white">
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
               Přetáhněte sem SVG soubory nebo klikněte pro výběr
             </h3>
-            <p className="text-xs text-zinc-400 mt-1 max-w-md">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 max-w-md">
               Podporuje jednotlivé soubory i hromadný výběr desítek SVG ikon najednou.
               Ikony se automaticky vyčistí a uloží do sady{' '}
-              <span className="text-zinc-200 font-medium">
+              <span className="text-zinc-800 dark:text-zinc-200 font-medium">
                 "{selectedCollection === 'Všechny sady' ? 'Moje ikony' : selectedCollection}"
               </span>
               .
@@ -394,16 +394,16 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
           </div>
 
           {feedbackMessage && (
-            <div className="p-3 bg-emerald-950/40 border border-emerald-800/60 rounded-lg text-emerald-300 text-xs flex items-center gap-2">
+            <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-lg text-emerald-800 dark:text-emerald-300 text-xs flex items-center gap-2">
               <Check className="w-4 h-4 shrink-0" />
               <span>{feedbackMessage}</span>
             </div>
           )}
 
           {/* New Collection Form */}
-          <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="flex items-center gap-2 text-xs text-zinc-300 w-full sm:w-auto">
-              <Folder className="w-4 h-4 text-zinc-400 shrink-0" />
+          <div className="bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 w-full sm:w-auto">
+              <Folder className="w-4 h-4 text-zinc-500 dark:text-zinc-400 shrink-0" />
               <span>Vytvořit novou kolekci pro organizaci:</span>
             </div>
             <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -412,7 +412,7 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
                 placeholder="Název sady (např. Fintech, Mobile UI)..."
                 value={newCollectionName}
                 onChange={(e) => setNewCollectionName(e.target.value)}
-                className="px-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500 flex-1 sm:w-60"
+                className="px-3 py-1.5 bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded-lg text-xs text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-cyan-500 flex-1 sm:w-60"
               />
               <button
                 onClick={() => {
@@ -422,7 +422,7 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
                   }
                 }}
                 disabled={!newCollectionName.trim()}
-                className="px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 disabled:opacity-50 text-white rounded-lg text-xs font-medium transition-colors flex items-center gap-1 cursor-pointer shrink-0"
+                className="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 disabled:opacity-50 text-white dark:bg-zinc-800 dark:hover:bg-zinc-700 rounded-lg text-xs font-medium transition-colors flex items-center gap-1 cursor-pointer shrink-0 shadow-xs"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Vytvořit</span>
@@ -432,7 +432,7 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
 
           {/* Icons Grid in current collection */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between text-xs text-zinc-400">
+            <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
               <span>
                 Ikony v zobrazení ({filteredIcons.length}):
               </span>
@@ -447,15 +447,15 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
                 {filteredIcons.map((icon) => (
                   <div
                     key={icon.id}
-                    className="group relative bg-zinc-900/70 hover:bg-zinc-850 border border-zinc-800 hover:border-zinc-700 rounded-lg p-2.5 flex flex-col items-center justify-center transition-all aspect-square"
+                    className="group relative bg-white hover:bg-zinc-50 dark:bg-zinc-900/70 dark:hover:bg-zinc-850 border border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700 rounded-lg p-2.5 flex flex-col items-center justify-center transition-all aspect-square shadow-2xs"
                   >
                     <div
-                      className="w-8 h-8 flex items-center justify-center text-white"
+                      className="w-8 h-8 flex items-center justify-center text-zinc-800 dark:text-white"
                       dangerouslySetInnerHTML={{
                         __html: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${sanitizeViewBox(icon.viewBox)}" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icon.svgContent}</svg>`,
                       }}
                     />
-                    <span className="text-[10px] text-zinc-400 group-hover:text-zinc-200 mt-2 truncate w-full text-center">
+                    <span className="text-[10px] text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-950 dark:group-hover:text-zinc-200 mt-2 truncate w-full text-center">
                       {icon.name}
                     </span>
 
@@ -465,7 +465,7 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
                         e.stopPropagation();
                         handleDeleteIcon(icon.id);
                       }}
-                      className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 p-1 bg-zinc-950/80 hover:bg-red-950 border border-zinc-800 hover:border-red-800 text-zinc-400 hover:text-red-300 rounded transition-all cursor-pointer"
+                      className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 p-1 bg-white/90 hover:bg-rose-50 border border-zinc-300 hover:border-rose-300 text-zinc-500 hover:text-rose-600 dark:bg-zinc-950/80 dark:hover:bg-rose-950 dark:border-zinc-800 dark:hover:border-rose-800 dark:text-zinc-400 dark:hover:text-rose-300 rounded transition-all cursor-pointer shadow-xs"
                       title="Smazat ikonu"
                     >
                       <Trash2 className="w-3 h-3" />
@@ -478,11 +478,11 @@ export const CustomIconsManagerModal: React.FC<CustomIconsManagerModalProps> = (
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3.5 border-t border-zinc-800/80 bg-zinc-900/30 flex items-center justify-between text-xs text-zinc-400 shrink-0">
+        <div className="px-6 py-3.5 border-t border-zinc-200 dark:border-zinc-800/80 bg-zinc-50 dark:bg-zinc-900/30 flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400 shrink-0">
           <span>Ukládáno do prohlížeče / IndexedDB offline úložiště</span>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg font-medium transition-colors cursor-pointer"
+            className="px-4 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:text-zinc-200 rounded-lg font-medium transition-colors cursor-pointer shadow-xs"
           >
             Hotovo
           </button>

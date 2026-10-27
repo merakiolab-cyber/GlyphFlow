@@ -20,6 +20,9 @@ import { parseSyncQueryParam } from './utils/safePayload';
 
 export default function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlTheme = params.get('theme') as 'dark' | 'light';
+    if (urlTheme === 'light' || urlTheme === 'dark') return urlTheme;
     return (localStorage.getItem('gf_theme') as 'dark' | 'light') || 'dark';
   });
 
@@ -199,7 +202,7 @@ export default function App() {
         {/* VIEW 1: CATALOG (Full screen responsive split) */}
         {activeView === 'catalog' && (
           <>
-            <aside className="w-full md:w-60 lg:w-64 bg-zinc-950/40 md:border-r border-b md:border-b-0 border-zinc-800/80 p-3 sm:p-4 overflow-y-auto shrink-0 max-h-48 md:max-h-none">
+            <aside className="w-full md:w-60 lg:w-64 bg-white dark:bg-zinc-950/40 md:border-r border-b md:border-b-0 border-zinc-200 dark:border-zinc-800/80 p-3 sm:p-4 overflow-y-auto shrink-0 max-h-48 md:max-h-none">
               <CategoryNav
                 categories={categories}
                 selectedCategory={selectedCategory}
@@ -261,7 +264,7 @@ export default function App() {
 
         {/* VIEW 2: ICONS LIBRARY (1000+ Icons Generator) */}
         {activeView === 'icons' && (
-          <IconsLibraryView />
+          <IconsLibraryView theme={theme} />
         )}
 
         {/* VIEW 3: TYPOGRAPHY & OPENTYPE STUDIO (Phase 3) */}
@@ -295,8 +298,8 @@ export default function App() {
               onOpenExport={handleOpenExportWithText}
             />
 
-            <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 space-y-3">
-              <h3 className="text-xs font-medium text-zinc-300">
+            <div className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5 space-y-3 shadow-xs dark:shadow-none">
+              <h3 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">
                 Rychlý výběr běžných znaků a emojis
               </h3>
               <div className="flex flex-wrap gap-2 text-xl font-normal">
@@ -304,7 +307,7 @@ export default function App() {
                   <button
                     key={c}
                     onClick={() => handleAddToScratchpad(c)}
-                    className="w-10 h-10 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-100 hover:text-white transition-colors flex items-center justify-center cursor-pointer"
+                    className="w-10 h-10 rounded-lg bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 hover:border-zinc-300 text-zinc-900 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:border-zinc-800 dark:hover:border-zinc-700 dark:text-zinc-100 dark:hover:text-white transition-colors flex items-center justify-center cursor-pointer shadow-xs dark:shadow-none"
                     title={`Přidat ${c}`}
                   >
                     {c}

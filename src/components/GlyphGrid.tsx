@@ -40,9 +40,9 @@ export const GlyphGrid: React.FC<GlyphGridProps> = ({
   return (
     <div className="w-full">
       {/* Controls Bar */}
-      <div className="flex items-center justify-between gap-4 mb-3 pb-2 border-b border-zinc-800/80">
-        <div className="text-xs text-zinc-400 font-mono-nums">
-          <span className="font-semibold text-zinc-200">{glyphs.length}</span> znaků
+      <div className="flex items-center justify-between gap-4 mb-3 pb-2 border-b border-zinc-200 dark:border-zinc-800/80">
+        <div className="text-xs text-zinc-600 dark:text-zinc-400 font-mono-nums">
+          <span className="font-semibold text-zinc-900 dark:text-zinc-200">{glyphs.length}</span> znaků
           {searchQuery && (
             <span className="text-zinc-500 ml-1.5">
               pro dotaz &ldquo;{searchQuery}&rdquo;
@@ -50,13 +50,13 @@ export const GlyphGrid: React.FC<GlyphGridProps> = ({
           )}
         </div>
 
-        <div className="flex items-center gap-1 bg-zinc-900 p-1 rounded-lg border border-zinc-800">
+        <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-lg border border-zinc-300 dark:border-zinc-800">
           <button
             onClick={() => setDensity('compact')}
             className={`p-1.5 rounded transition-colors cursor-pointer ${
               density === 'compact'
-                ? 'bg-zinc-800 text-white font-medium'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white text-zinc-950 dark:bg-zinc-800 dark:text-white font-medium shadow-xs'
+                : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
             }`}
             title="Kompaktní mřížka"
           >
@@ -66,8 +66,8 @@ export const GlyphGrid: React.FC<GlyphGridProps> = ({
             onClick={() => setDensity('normal')}
             className={`p-1.5 rounded transition-colors cursor-pointer ${
               density === 'normal'
-                ? 'bg-zinc-800 text-white font-medium'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white text-zinc-950 dark:bg-zinc-800 dark:text-white font-medium shadow-xs'
+                : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
             }`}
             title="Standardní mřížka"
           >
@@ -77,8 +77,8 @@ export const GlyphGrid: React.FC<GlyphGridProps> = ({
             onClick={() => setDensity('spacious')}
             className={`p-1.5 rounded transition-colors cursor-pointer ${
               density === 'spacious'
-                ? 'bg-zinc-800 text-white font-medium'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-white text-zinc-950 dark:bg-zinc-800 dark:text-white font-medium shadow-xs'
+                : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
             }`}
             title="Vzdušné velké karty"
           >

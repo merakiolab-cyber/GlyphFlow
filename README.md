@@ -6,6 +6,7 @@ Profesionální offline mapa znaků pro Windows a web, inspirovaná moderní viz
 
 ## 📸 Náhledy aplikace
 
+### Tmavý režim (Dark Mode)
 | Mapa znaků & Unicode Studio | Knihovna 1600+ vektorových ikon |
 |:---:|:---:|
 | ![Mapa znaků](docs/screenshots/charmap.png) | ![Knihovna ikon](docs/screenshots/icons.png) |
@@ -13,6 +14,16 @@ Profesionální offline mapa znaků pro Windows a web, inspirovaná moderní viz
 <p align="center">
   <strong>Typografická analýza & OpenType Studio</strong><br />
   <img src="docs/screenshots/typography.png" alt="Typografická analýza & OpenType Studio" width="100%" />
+</p>
+
+### Světlý režim (Fluent Light Mode)
+| Mapa znaků (Light Mode) | Knihovna ikon (Light Mode) |
+|:---:|:---:|
+| ![Mapa znaků - Light Mode](docs/screenshots/charmap_light.png) | ![Knihovna ikon - Light Mode](docs/screenshots/icons_light.png) |
+
+<p align="center">
+  <strong>Typografická analýza & OpenType Studio (Light Mode)</strong><br />
+  <img src="docs/screenshots/typography_light.png" alt="Typografická analýza v Light Mode" width="100%" />
 </p>
 
 ---

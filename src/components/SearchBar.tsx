@@ -67,9 +67,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
   return (
     <div className="relative w-full">
-      <div className="relative flex items-center bg-zinc-900/90 dark:bg-zinc-900/90 border border-zinc-800 hover:border-zinc-700 focus-within:border-zinc-600 rounded-xl transition-colors">
-        <div className="pl-3.5 pr-2 text-zinc-400 flex items-center pointer-events-none">
-          <Search className="w-4 h-4 text-zinc-400" />
+      <div className="relative flex items-center bg-white dark:bg-zinc-900/90 border border-zinc-300 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 focus-within:border-cyan-500 dark:focus-within:border-zinc-600 rounded-xl transition-colors shadow-xs dark:shadow-none">
+        <div className="pl-3.5 pr-2 text-zinc-400 dark:text-zinc-500 flex items-center pointer-events-none">
+          <Search className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
         </div>
 
         <input
@@ -83,7 +83,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             }
           }}
           placeholder="Hledat znak, název (např. 'euro', 'delta', 'odmocnina', 'U+03B4')..."
-          className="w-full py-2.5 pr-24 text-sm text-zinc-100 placeholder-zinc-500 bg-transparent focus:outline-none"
+          className="w-full py-2.5 pr-24 text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 bg-transparent focus:outline-none"
         />
 
         {value && (
@@ -92,7 +92,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
               onChange('');
               inputRef.current?.focus();
             }}
-            className="p-1 mr-1 text-zinc-400 hover:text-zinc-200 rounded transition-colors cursor-pointer"
+            className="p-1 mr-1 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 rounded transition-colors cursor-pointer"
             title="Vymazat (Esc)"
           >
             <X className="w-4 h-4" />
@@ -100,11 +100,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         )}
 
         <div className="pr-3 flex items-center gap-2 shrink-0 pointer-events-none">
-          <span className="hidden sm:inline-block text-[11px] font-mono-nums px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700/60">
+          <span className="hidden sm:inline-block text-[11px] font-mono-nums px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700/60 font-medium">
             ⌘K
           </span>
-          <span className="text-xs font-mono-nums text-zinc-300 font-medium">
-            {resultsCount} <span className="text-zinc-500">/ {totalCount}</span>
+          <span className="text-xs font-mono-nums text-zinc-700 dark:text-zinc-300 font-medium">
+            {resultsCount} <span className="text-zinc-400 dark:text-zinc-500">/ {totalCount}</span>
           </span>
         </div>
       </div>
@@ -112,11 +112,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       {showHistoryDropdown && recentSearches.length > 0 && (
         <div
           ref={dropdownRef}
-          className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-zinc-900 border border-zinc-800 rounded-xl shadow-xl p-2"
+          className="absolute left-0 right-0 top-full mt-1.5 z-50 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-xl p-2 animate-in fade-in"
         >
-          <div className="flex items-center justify-between px-2 py-1 mb-1 border-b border-zinc-800">
-            <span className="text-xs font-medium text-zinc-400 flex items-center gap-1.5">
-              <History className="w-3.5 h-3.5 text-zinc-400" />
+          <div className="flex items-center justify-between px-2 py-1 mb-1 border-b border-zinc-200 dark:border-zinc-800">
+            <span className="text-xs font-medium text-zinc-700 dark:text-zinc-400 flex items-center gap-1.5">
+              <History className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
               Nedávná hledání
             </span>
             <button
@@ -125,7 +125,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 onClearRecentSearches();
                 setShowHistoryDropdown(false);
               }}
-              className="text-[11px] text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer"
+              className="text-[11px] text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors cursor-pointer"
             >
               Vymazat
             </button>
@@ -139,13 +139,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                   onSelectRecentSearch(item.query);
                   setShowHistoryDropdown(false);
                 }}
-                className="flex items-center justify-between px-2.5 py-1.5 text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 rounded-lg text-left transition-colors cursor-pointer group"
+                className="flex items-center justify-between px-2.5 py-1.5 text-xs text-zinc-700 hover:text-zinc-950 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:text-white dark:hover:bg-zinc-800 rounded-lg text-left transition-colors cursor-pointer group"
               >
                 <span className="flex items-center gap-2 truncate">
-                  <Clock className="w-3 h-3 text-zinc-500 group-hover:text-zinc-300 shrink-0" />
+                  <Clock className="w-3 h-3 text-zinc-400 group-hover:text-zinc-600 dark:text-zinc-500 dark:group-hover:text-zinc-300 shrink-0" />
                   <span className="truncate">{item.query}</span>
                 </span>
-                <span className="text-[10px] font-mono-nums text-zinc-500 shrink-0">
+                <span className="text-[10px] font-mono-nums text-zinc-400 dark:text-zinc-500 shrink-0">
                   {item.resultsCount} nalezeno
                 </span>
               </button>
@@ -163,8 +163,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             onClick={() => onChange(tag.query)}
             className={`px-2 py-0.5 rounded text-xs transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
               value === tag.query
-                ? 'bg-zinc-200 text-zinc-950 font-medium'
-                : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/80'
+                ? 'bg-zinc-900 text-white dark:bg-zinc-200 dark:text-zinc-950 font-medium shadow-xs'
+                : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/70 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-800/80'
             }`}
           >
             {tag.label}

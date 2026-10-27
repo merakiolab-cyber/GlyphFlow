@@ -45,12 +45,12 @@ export const GlyphCard: React.FC<GlyphCardProps> = ({
   return (
     <div
       onClick={handleCopyClick}
-      className={`group relative flex flex-col justify-between bg-zinc-900/40 hover:bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 rounded-xl transition-colors cursor-pointer select-none ${cardPadding}`}
+      className={`group relative flex flex-col justify-between bg-white dark:bg-zinc-900/40 hover:bg-zinc-50 dark:hover:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/80 hover:border-zinc-300 dark:hover:border-zinc-700 rounded-xl transition-all cursor-pointer select-none shadow-xs dark:shadow-none hover:shadow-md ${cardPadding}`}
       title={`Kliknutím zkopírujete znak ${glyph.char} (${glyph.czechName})`}
     >
       {/* Top: Hex Code & Favorite */}
       <div className="flex items-center justify-between gap-1 w-full text-[10px] text-zinc-500 font-mono-nums">
-        <span className="font-normal tracking-wide group-hover:text-zinc-300 transition-colors">
+        <span className="font-normal tracking-wide group-hover:text-zinc-700 dark:group-hover:text-zinc-300 transition-colors">
           {glyph.hex}
         </span>
 
@@ -61,28 +61,28 @@ export const GlyphCard: React.FC<GlyphCardProps> = ({
           }}
           className={`p-0.5 rounded transition-colors cursor-pointer ${
             isFavorite
-              ? 'text-amber-400'
-              : 'text-zinc-600 hover:text-amber-400 opacity-40 group-hover:opacity-100'
+              ? 'text-amber-500 fill-amber-500'
+              : 'text-zinc-400 hover:text-amber-500 opacity-40 group-hover:opacity-100'
           }`}
           title={isFavorite ? 'Odebrat z oblíbených' : 'Přidat do oblíbených'}
         >
-          <Star className={`w-3.5 h-3.5 ${isFavorite ? 'fill-amber-400' : ''}`} />
+          <Star className={`w-3.5 h-3.5 ${isFavorite ? 'fill-amber-400 text-amber-500' : ''}`} />
         </button>
       </div>
 
       {/* Center: Character Typography */}
       <div className="my-3 flex items-center justify-center min-h-[58px]">
         <span
-          className={`${charSize} font-sans font-normal text-zinc-100 group-hover:text-white group-hover:scale-105 transition-transform duration-100`}
+          className={`${charSize} font-sans font-normal text-zinc-900 group-hover:text-black dark:text-zinc-100 dark:group-hover:text-white group-hover:scale-105 transition-transform duration-100`}
         >
           {glyph.char}
         </span>
       </div>
 
       {/* Bottom: Title & Subtle Action Icons */}
-      <div className="w-full pt-1.5 border-t border-zinc-800/60 flex items-center justify-between gap-1">
+      <div className="w-full pt-1.5 border-t border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between gap-1">
         <span
-          className="text-[11px] font-normal text-zinc-400 group-hover:text-zinc-200 truncate"
+          className="text-[11px] font-normal text-zinc-600 group-hover:text-zinc-900 dark:text-zinc-400 dark:group-hover:text-zinc-200 truncate"
           title={`${glyph.czechName} (${glyph.name})`}
         >
           {glyph.czechName}
@@ -94,7 +94,7 @@ export const GlyphCard: React.FC<GlyphCardProps> = ({
               e.stopPropagation();
               onAddToScratchpad(glyph.char);
             }}
-            className="p-1 rounded text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+            className="p-1 rounded text-zinc-500 hover:text-zinc-900 hover:bg-zinc-200/70 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800 transition-colors cursor-pointer"
             title="Přidat do textové schránky"
           >
             <Plus className="w-3 h-3" />
@@ -105,7 +105,7 @@ export const GlyphCard: React.FC<GlyphCardProps> = ({
               e.stopPropagation();
               onInspect(glyph);
             }}
-            className="p-1 rounded text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+            className="p-1 rounded text-zinc-500 hover:text-zinc-900 hover:bg-zinc-200/70 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800 transition-colors cursor-pointer"
             title="Detail kódů a encodings"
           >
             <Info className="w-3 h-3" />
@@ -116,7 +116,7 @@ export const GlyphCard: React.FC<GlyphCardProps> = ({
               e.stopPropagation();
               onExport(glyph);
             }}
-            className="p-1 rounded text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+            className="p-1 rounded text-zinc-500 hover:text-zinc-900 hover:bg-zinc-200/70 dark:text-zinc-400 dark:hover:text-white dark:hover:bg-zinc-800 transition-colors cursor-pointer"
             title="Exportovat SVG / PNG"
           >
             <Download className="w-3 h-3" />
@@ -126,8 +126,8 @@ export const GlyphCard: React.FC<GlyphCardProps> = ({
 
       {/* Micro Toast Feedback */}
       {copied && (
-        <div className="absolute inset-0 bg-zinc-900/95 border border-zinc-600 rounded-xl flex items-center justify-center gap-1.5 text-xs font-medium text-zinc-100 backdrop-blur-sm animate-in fade-in duration-75">
-          <Check className="w-3.5 h-3.5 text-zinc-200" />
+        <div className="absolute inset-0 bg-white/95 dark:bg-zinc-900/95 border border-zinc-300 dark:border-zinc-600 rounded-xl flex items-center justify-center gap-1.5 text-xs font-medium text-zinc-900 dark:text-zinc-100 backdrop-blur-sm animate-in fade-in duration-75 shadow-lg">
+          <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-zinc-200" />
           <span>Zkopírováno</span>
         </div>
       )}

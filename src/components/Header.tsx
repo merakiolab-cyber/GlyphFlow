@@ -23,7 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenExportStudio,
 }) => {
   return (
-    <header className="sticky top-0 z-40 w-full bg-zinc-950/80 dark:bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/80 px-4 sm:px-6 lg:px-8 py-3 transition-colors shrink-0">
+    <header className="sticky top-0 z-40 w-full bg-white/90 dark:bg-zinc-950/80 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800/80 px-4 sm:px-6 lg:px-8 py-3 transition-colors shrink-0 shadow-xs dark:shadow-none">
       <div className="w-full flex items-center justify-between gap-4">
         {/* Zone 1: Minimal Brand Wordmark */}
         <div className="flex items-center gap-3 shrink-0">
@@ -31,10 +31,10 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setActiveView('catalog')}
             className="flex items-center gap-2 text-left group cursor-pointer"
           >
-            <div className="w-7 h-7 rounded-md bg-zinc-800 border border-zinc-700/60 flex items-center justify-center font-mono-nums font-semibold text-zinc-100 text-sm group-hover:border-zinc-500 transition-colors">
+            <div className="w-7 h-7 rounded-md bg-zinc-900 dark:bg-zinc-800 border border-zinc-800 dark:border-zinc-700/60 flex items-center justify-center font-mono-nums font-semibold text-white dark:text-zinc-100 text-sm group-hover:border-cyan-500 transition-colors shadow-xs">
               Ω
             </div>
-            <span className="text-sm font-semibold tracking-tight text-zinc-100 group-hover:text-white transition-colors whitespace-nowrap">
+            <span className="text-sm font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 group-hover:text-cyan-600 dark:group-hover:text-white transition-colors whitespace-nowrap">
               GlyphFlow
             </span>
           </button>
@@ -44,13 +44,13 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Zone 2: Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-xs font-medium text-zinc-400">
+        <nav className="hidden md:flex items-center gap-6 text-xs font-medium text-zinc-600 dark:text-zinc-400">
           <button
             onClick={() => setActiveView('catalog')}
             className={`whitespace-nowrap shrink-0 transition-colors cursor-pointer py-1 ${
               activeView === 'catalog'
-                ? 'text-white font-semibold border-b border-white'
-                : 'text-zinc-400 hover:text-zinc-200 border-b border-transparent'
+                ? 'text-zinc-950 dark:text-white font-semibold border-b-2 border-zinc-950 dark:border-white'
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 border-b-2 border-transparent'
             }`}
           >
             Mapa znaků & Emojis
@@ -60,23 +60,23 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setActiveView('icons')}
             className={`whitespace-nowrap shrink-0 transition-colors cursor-pointer py-1 flex items-center gap-1.5 ${
               activeView === 'icons'
-                ? 'text-white font-semibold border-b border-white'
-                : 'text-zinc-400 hover:text-zinc-200 border-b border-transparent'
+                ? 'text-zinc-950 dark:text-white font-semibold border-b-2 border-zinc-950 dark:border-white'
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 border-b-2 border-transparent'
             }`}
           >
-            <Layers className="w-3.5 h-3.5 text-zinc-400" />
-            <span>Knihovna ikon (1000+)</span>
+            <Layers className="w-3.5 h-3.5" />
+            <span>Knihovna ikon (1600+)</span>
           </button>
 
           <button
             onClick={() => setActiveView('typography')}
             className={`whitespace-nowrap shrink-0 transition-colors cursor-pointer py-1 flex items-center gap-1.5 ${
               activeView === 'typography'
-                ? 'text-white font-semibold border-b border-white'
-                : 'text-zinc-400 hover:text-zinc-200 border-b border-transparent'
+                ? 'text-zinc-950 dark:text-white font-semibold border-b-2 border-zinc-950 dark:border-white'
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 border-b-2 border-transparent'
             }`}
           >
-            <Type className="w-3.5 h-3.5 text-zinc-400" />
+            <Type className="w-3.5 h-3.5" />
             <span>Typografie & OpenType</span>
           </button>
 
@@ -84,13 +84,13 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setActiveView('favorites')}
             className={`whitespace-nowrap shrink-0 transition-colors cursor-pointer py-1 flex items-center gap-1.5 ${
               activeView === 'favorites'
-                ? 'text-white font-semibold border-b border-white'
-                : 'text-zinc-400 hover:text-zinc-200 border-b border-transparent'
+                ? 'text-zinc-950 dark:text-white font-semibold border-b-2 border-zinc-950 dark:border-white'
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 border-b-2 border-transparent'
             }`}
           >
             <span>Oblíbené</span>
             {favoritesCount > 0 && (
-              <span className="text-[10px] font-mono-nums px-1.5 py-0.2 bg-zinc-800 text-zinc-300 border border-zinc-700 rounded">
+              <span className="text-[10px] font-mono-nums px-1.5 py-0.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded font-medium">
                 {favoritesCount}
               </span>
             )}
@@ -100,13 +100,13 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setActiveView('scratchpad')}
             className={`whitespace-nowrap shrink-0 transition-colors cursor-pointer py-1 flex items-center gap-1.5 ${
               activeView === 'scratchpad'
-                ? 'text-white font-semibold border-b border-white'
-                : 'text-zinc-400 hover:text-zinc-200 border-b border-transparent'
+                ? 'text-zinc-950 dark:text-white font-semibold border-b-2 border-zinc-950 dark:border-white'
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 border-b-2 border-transparent'
             }`}
           >
             <span>Schránka</span>
             {scratchpadCount > 0 && (
-              <span className="text-[10px] font-mono-nums px-1.5 py-0.2 bg-zinc-800 text-zinc-300 border border-zinc-700 rounded">
+              <span className="text-[10px] font-mono-nums px-1.5 py-0.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 rounded font-medium">
                 {scratchpadCount}
               </span>
             )}
@@ -116,8 +116,8 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setActiveView('history')}
             className={`whitespace-nowrap shrink-0 transition-colors cursor-pointer py-1 ${
               activeView === 'history'
-                ? 'text-white font-semibold border-b border-white'
-                : 'text-zinc-400 hover:text-zinc-200 border-b border-transparent'
+                ? 'text-zinc-950 dark:text-white font-semibold border-b-2 border-zinc-950 dark:border-white'
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 border-b-2 border-transparent'
             }`}
           >
             Historie
@@ -130,59 +130,87 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={onOpenExportStudio}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-200 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 hover:border-zinc-600 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-800 dark:text-zinc-200 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-700/80 rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0 shadow-xs dark:shadow-none"
             title="Export do SVG / PNG"
           >
-            <Sparkles className="w-3.5 h-3.5 text-zinc-400" />
+            <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-zinc-400" />
             <span>Export SVG/PNG</span>
           </button>
 
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors cursor-pointer border border-zinc-800"
-            title={theme === 'dark' ? 'Světlý režim' : 'Tmavý režim'}
+            className="p-1.5 rounded-lg text-zinc-700 hover:text-zinc-900 bg-zinc-100 hover:bg-zinc-200 dark:text-zinc-400 dark:hover:text-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 transition-colors cursor-pointer border border-zinc-300 dark:border-zinc-800 shadow-xs dark:shadow-none"
+            title={theme === 'dark' ? 'Přepnout na světlý režim' : 'Přepnout na tmavý režim'}
             aria-label="Toggle theme"
           >
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-zinc-300" /> : <Moon className="w-4 h-4 text-zinc-700" />}
+            {theme === 'dark' ? (
+              <Sun className="w-4 h-4 text-amber-400" />
+            ) : (
+              <Moon className="w-4 h-4 text-zinc-800" />
+            )}
           </button>
         </div>
       </div>
 
       {/* Mobile Nav Row */}
-      <div className="flex md:hidden items-center justify-around gap-2 pt-2 mt-2 border-t border-zinc-800/60 text-xs overflow-x-auto no-scrollbar">
+      <div className="flex md:hidden items-center justify-around gap-2 pt-2 mt-2 border-t border-zinc-200 dark:border-zinc-800/60 text-xs overflow-x-auto no-scrollbar">
         <button
           onClick={() => setActiveView('catalog')}
-          className={`py-1 px-2 font-medium whitespace-nowrap ${activeView === 'catalog' ? 'text-white' : 'text-zinc-400'}`}
+          className={`py-1 px-2 font-medium whitespace-nowrap ${
+            activeView === 'catalog'
+              ? 'text-zinc-950 dark:text-white font-semibold'
+              : 'text-zinc-600 dark:text-zinc-400'
+          }`}
         >
           Znaky
         </button>
         <button
           onClick={() => setActiveView('icons')}
-          className={`py-1 px-2 font-medium whitespace-nowrap ${activeView === 'icons' ? 'text-white' : 'text-zinc-400'}`}
+          className={`py-1 px-2 font-medium whitespace-nowrap ${
+            activeView === 'icons'
+              ? 'text-zinc-950 dark:text-white font-semibold'
+              : 'text-zinc-600 dark:text-zinc-400'
+          }`}
         >
           Ikony
         </button>
         <button
           onClick={() => setActiveView('typography')}
-          className={`py-1 px-2 font-medium whitespace-nowrap ${activeView === 'typography' ? 'text-white' : 'text-zinc-400'}`}
+          className={`py-1 px-2 font-medium whitespace-nowrap ${
+            activeView === 'typography'
+              ? 'text-zinc-950 dark:text-white font-semibold'
+              : 'text-zinc-600 dark:text-zinc-400'
+          }`}
         >
           Typografie
         </button>
         <button
           onClick={() => setActiveView('favorites')}
-          className={`py-1 px-2 font-medium whitespace-nowrap ${activeView === 'favorites' ? 'text-white' : 'text-zinc-400'}`}
+          className={`py-1 px-2 font-medium whitespace-nowrap ${
+            activeView === 'favorites'
+              ? 'text-zinc-950 dark:text-white font-semibold'
+              : 'text-zinc-600 dark:text-zinc-400'
+          }`}
         >
           Oblíbené {favoritesCount > 0 && `(${favoritesCount})`}
         </button>
         <button
           onClick={() => setActiveView('scratchpad')}
-          className={`py-1 px-2 font-medium whitespace-nowrap ${activeView === 'scratchpad' ? 'text-white' : 'text-zinc-400'}`}
+          className={`py-1 px-2 font-medium whitespace-nowrap ${
+            activeView === 'scratchpad'
+              ? 'text-zinc-950 dark:text-white font-semibold'
+              : 'text-zinc-600 dark:text-zinc-400'
+          }`}
         >
           Schránka
         </button>
         <button
           onClick={() => setActiveView('history')}
-          className={`py-1 px-2 font-medium whitespace-nowrap ${activeView === 'history' ? 'text-white' : 'text-zinc-400'}`}
+          className={`py-1 px-2 font-medium whitespace-nowrap ${
+            activeView === 'history'
+              ? 'text-zinc-950 dark:text-white font-semibold'
+              : 'text-zinc-600 dark:text-zinc-400'
+          }`}
         >
           Historie
         </button>

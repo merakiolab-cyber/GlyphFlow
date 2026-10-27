@@ -4,6 +4,19 @@ Všechny významné změny v projektu GlyphFlow jsou zaznamenány v tomto dokume
 
 ## [Unreleased]
 
+### Opraveno & Vylepšeno (Fluent Light Mode v1.3.3)
+- **Kompletní Fluent Windows 11 Light Mode visual overhaul**:
+  - **Tailwind v4 integrace**: Přidána `@custom-variant dark (&:where(.dark, .dark *));` do `src/index.css`, která zaručuje správnou aktivaci `.dark` tříd nezávisle na systémovém nastavení OS.
+  - **Okamžitá inicializace tématu bez probliknutí**: Přidán synchronní inline skript do `<head>` v `index.html` vyhodnocující URL parametr `?theme=` a `localStorage.getItem('gf_theme')` ještě před vykreslením DOMu.
+  - **Automatická adaptace barev ikon**: `IconsLibraryView` dynamicky přizpůsobuje výchozí tahy ikon (`#18181B` v Light Mode vs `#FFFFFF` v Dark Mode) i sekundární Duotone barvu (`#0284C7` vs `#00F2FE`), takže ikony jsou okamžitě zřetelné a kontrastní.
+  - **Oprava kolize URL parametrů**: Odstraněn konflikt v inicializaci kategorie, kde `?theme=light` způsobovalo nastavení `selectedCategory = 'light'` s 0 nalezenými ikonami.
+  - **Sjednocený Fluent Design System**:
+    - **Header**: Bílý podklad `bg-white/90` s jemným rozostřením `backdrop-blur-md`, tmavé navigační indikátory s vysokým kontrastem a přepínač Sun/Moon.
+    - **Vyhledávací lišta & Schránka**: Čistě bílé povrchy karet s jemnými rámečky `border-zinc-200`, tmavým textem a přehlednou historií.
+    - **Katalog & Karty znaků**: Elegantní karty `bg-white` se subtilním hover efektem a stínováním Windows 11 Fluent UX.
+    - **Knihovna ikon & Modály**: Kompletně přepracované zobrazení pro `IconsLibraryView`, `TypographyStudioView`, `CustomIconsManagerModal`, `FigmaBridgeModal`, `GlyphDetailModal`, `ExportModal` a `SyncModal`.
+  - **Aktualizace dokumentace & Náhledy**: Do `README.md` i repozitáře přidány screenshoty pro oba režimy (`charmap_light.png`, `icons_light.png`, `typography_light.png`).
+
 ### Přidáno & Vylepšeno (Knihovna ikon v1.3.2)
 - **Nové sady ikon & specializované kategorie: Finance, Software/IT a Umělá inteligence (AI)**:
   - **Finance & Investování (93+ ikon)**: 12 nových ručně navržených 24×24 vektorových ikon (`Crypto Token`, `Candlestick Bull/Bear`, `Liquidity Pool`, `Yield Farming`, `Staking Rewards`, `Hardware Wallet`, `Smart Contract`, `Order Book`, `DeFi Swap`, `Bull Market`, `Investment Portfolio`) + provázání s existujícími Lucide ikonami a rozšířenými českými/anglickými štítky (krypto, akcie, trading, burza, defi, staking, výnos, bitcoin, peněženka, grafy).

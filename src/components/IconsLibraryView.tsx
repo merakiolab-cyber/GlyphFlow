@@ -39,23 +39,27 @@ import { CustomIconsManagerModal } from './CustomIconsManagerModal';
 import { parseUploadedSvg, sanitizeViewBox } from '../utils/svgSanitize';
 
 const DESIGNER_COLORS = [
+  { name: 'Čistý grafit / Azurová', color: '#18181B', secondary: '#0284C7' },
   { name: 'Bílá / Kyanidová (Cyan)', color: '#FFFFFF', secondary: '#00F2FE' },
-  { name: 'Čistý grafit / Azurová', color: '#18181B', secondary: '#38BDF8' },
   { name: 'Kyanidová (Cyan) / Hluboká modř', color: '#00F2FE', secondary: '#0284C7' },
-  { name: 'Smaragdová (Emerald) / Mint', color: '#10B981', secondary: '#34D399' },
-  { name: 'Královská fialová / Růžová', color: '#8B5CF6', secondary: '#EC4899' },
-  { name: 'Západ slunce (Amber) / Oranž', color: '#F59E0B', secondary: '#EA580C' },
-  { name: 'Korálová (Rose) / Karmín', color: '#F43F5E', secondary: '#BE123C' },
+  { name: 'Smaragdová (Emerald) / Mint', color: '#059669', secondary: '#10B981' },
+  { name: 'Královská fialová / Růžová', color: '#7C3AED', secondary: '#EC4899' },
+  { name: 'Západ slunce (Amber) / Oranž', color: '#D97706', secondary: '#EA580C' },
+  { name: 'Korálová (Rose) / Karmín', color: '#E11D48', secondary: '#BE123C' },
 ];
 
-export const IconsLibraryView: React.FC = () => {
+interface IconsLibraryViewProps {
+  theme?: 'dark' | 'light';
+}
+
+export const IconsLibraryView: React.FC<IconsLibraryViewProps> = ({ theme = 'dark' }) => {
   const [searchQuery, setSearchQuery] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('q') || params.get('search') || '';
   });
   const [selectedCategory, setSelectedCategory] = useState(() => {
     const params = new URLSearchParams(window.location.search);
-    return params.get('category') || params.get('theme') || 'all-icons';
+    return params.get('category') || params.get('cat') || 'all-icons';
   });
   const [selectedStyle, setSelectedStyle] = useState<IconStyle>(() => {
     const params = new URLSearchParams(window.location.search);
@@ -63,9 +67,21 @@ export const IconsLibraryView: React.FC = () => {
     return ['outline', 'solid', 'duotone', 'colored', 'modern3d'].includes(s) ? s : 'outline';
   });
   const [strokeWidth, setStrokeWidth] = useState<number>(2);
-  const [iconColor, setIconColor] = useState<string>('#FFFFFF');
-  const [secondaryColor, setSecondaryColor] = useState<string>('#00F2FE');
+
+  // Auto-adapt default icon colors based on theme
+  const [iconColor, setIconColor] = useState<string>(() => (theme === 'light' ? '#18181B' : '#FFFFFF'));
+  const [secondaryColor, setSecondaryColor] = useState<string>(() => (theme === 'light' ? '#0284C7' : '#00F2FE'));
   const [iconSize, setIconSize] = useState<number>(24);
+
+  useEffect(() => {
+    if (theme === 'light') {
+      if (iconColor === '#FFFFFF') setIconColor('#18181B');
+      if (secondaryColor === '#00F2FE') setSecondaryColor('#0284C7');
+    } else if (theme === 'dark') {
+      if (iconColor === '#18181B') setIconColor('#FFFFFF');
+      if (secondaryColor === '#0284C7') setSecondaryColor('#00F2FE');
+    }
+  }, [theme]);
 
   // Custom uploaded icons from IndexedDB
   const [customIcons, setCustomIcons] = useState<CustomIconItem[]>([]);
@@ -360,46 +376,46 @@ export const IconsLibraryView: React.FC = () => {
       />
 
       {/* Sidebar: Categories, Custom Uploads, and Style Presets */}
-      <aside className="w-full md:w-64 bg-zinc-950/60 md:border-r border-b md:border-b-0 border-zinc-800/80 p-3 sm:p-4 overflow-y-auto shrink-0 space-y-5">
+      <aside className="w-full md:w-64 bg-zinc-50 dark:bg-zinc-950/60 md:border-r border-b md:border-b-0 border-zinc-200 dark:border-zinc-800/80 p-3 sm:p-4 overflow-y-auto shrink-0 space-y-5">
         {/* Custom SVG Set Upload Banner */}
-        <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
+        <div className="p-3 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl space-y-2 shadow-xs dark:shadow-none">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-zinc-200 flex items-center gap-1.5">
-              <Folder className="w-3.5 h-3.5 text-cyan-400" />
+            <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 flex items-center gap-1.5">
+              <Folder className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
               <span>Vlastní & kurátorské sady</span>
             </span>
-            <span className="text-[10px] font-mono-nums text-cyan-300 bg-cyan-950/60 border border-cyan-800/60 px-1.5 py-0.5 rounded font-medium">
+            <span className="text-[10px] font-mono-nums text-cyan-700 bg-cyan-50 border border-cyan-200 dark:text-cyan-300 dark:bg-cyan-950/60 dark:border-cyan-800/60 px-1.5 py-0.5 rounded font-medium">
               {allIcons.filter((i) => i.isCustom).length}
             </span>
           </div>
-          <p className="text-[11px] text-zinc-400 leading-snug">
+          <p className="text-[11px] text-zinc-600 dark:text-zinc-400 leading-snug">
             3 kurátorské sady (Finance, IT, AI) + podpora vlastního SVG nahrávání do offline paměti.
           </p>
           <div className="flex gap-1.5">
             <button
               onClick={() => setIsCustomManagerOpen(true)}
-              className="flex-1 py-1.5 px-2 text-xs font-medium text-white bg-zinc-800 hover:bg-zinc-700 border border-zinc-750 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1"
+              className="flex-1 py-1.5 px-2 text-xs font-medium text-zinc-800 hover:text-black bg-zinc-100 hover:bg-zinc-200 dark:text-white dark:bg-zinc-800 dark:hover:bg-zinc-700 border border-zinc-300 dark:border-zinc-750 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1 shadow-xs dark:shadow-none"
             >
-              <Folder className="w-3 h-3 text-cyan-400" />
+              <Folder className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />
               <span>Spravovat</span>
             </button>
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="py-1.5 px-2 text-xs font-medium text-zinc-300 hover:text-white bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-800 rounded-lg transition-colors cursor-pointer flex items-center justify-center"
+              className="py-1.5 px-2 text-xs font-medium text-zinc-600 hover:text-zinc-900 bg-zinc-100 hover:bg-zinc-200 dark:text-zinc-300 dark:hover:text-white dark:bg-zinc-800/60 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-800 rounded-lg transition-colors cursor-pointer flex items-center justify-center shadow-xs dark:shadow-none"
               title="Rychlý upload souborů"
             >
-              <Upload className="w-3 h-3 text-zinc-400" />
+              <Upload className="w-3 h-3 text-zinc-500 dark:text-zinc-400" />
             </button>
           </div>
         </div>
 
         {/* Categories List */}
         <div>
-          <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-zinc-800/80">
-            <h3 className="text-xs font-semibold text-zinc-400">
+          <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-zinc-200 dark:border-zinc-800/80">
+            <h3 className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
               Kategorie ikon
             </h3>
-            <span className="text-[10px] font-mono-nums text-zinc-500">
+            <span className="text-[10px] font-mono-nums text-zinc-400 dark:text-zinc-500">
               {allIcons.length} celkem
             </span>
           </div>
@@ -420,12 +436,12 @@ export const IconsLibraryView: React.FC = () => {
                   onClick={() => setSelectedCategory(theme.id)}
                   className={`flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-colors text-left cursor-pointer ${
                     isSelected
-                      ? 'bg-zinc-800 text-white font-medium'
-                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/60'
+                      ? 'bg-zinc-900 text-white dark:bg-zinc-800 dark:text-white font-medium shadow-xs'
+                      : 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-200/60 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-900/60'
                   }`}
                 >
                   <span className="truncate">{theme.name}</span>
-                  <span className="text-[10px] font-mono-nums text-zinc-500 shrink-0 ml-1">
+                  <span className={`text-[10px] font-mono-nums shrink-0 ml-1 ${isSelected ? 'text-zinc-300 dark:text-zinc-400' : 'text-zinc-400 dark:text-zinc-500'}`}>
                     {count}
                   </span>
                 </button>
@@ -436,7 +452,7 @@ export const IconsLibraryView: React.FC = () => {
 
         {/* Visual Styles */}
         <div>
-          <h3 className="text-xs font-semibold text-zinc-400 mb-2">
+          <h3 className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 mb-2">
             Styl ikony
           </h3>
           <div className="grid grid-cols-2 gap-1.5">
@@ -452,8 +468,8 @@ export const IconsLibraryView: React.FC = () => {
                 onClick={() => setSelectedStyle(st.id as IconStyle)}
                 className={`py-1.5 px-2 rounded-lg text-xs font-medium text-center transition-colors cursor-pointer ${
                   selectedStyle === st.id
-                    ? 'bg-zinc-100 text-zinc-950 font-semibold'
-                    : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
+                    ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 font-semibold shadow-xs'
+                    : 'bg-white text-zinc-700 hover:text-zinc-950 border border-zinc-250 hover:bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 dark:border-zinc-800'
                 }`}
               >
                 {st.label}
@@ -463,8 +479,8 @@ export const IconsLibraryView: React.FC = () => {
         </div>
 
         {/* Global Customizer Engine */}
-        <div className="pt-3 border-t border-zinc-800 space-y-3">
-          <h3 className="text-xs font-semibold text-zinc-400 flex items-center gap-1.5">
+        <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800 space-y-3">
+          <h3 className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
             <SlidersHorizontal className="w-3.5 h-3.5" />
             <span>Parametry zobrazení & exportu</span>
           </h3>
@@ -472,9 +488,9 @@ export const IconsLibraryView: React.FC = () => {
           {/* Stroke Width Slider */}
           {selectedStyle !== 'solid' && (
             <div>
-              <div className="flex justify-between text-[11px] text-zinc-400 mb-1">
+              <div className="flex justify-between text-[11px] text-zinc-500 dark:text-zinc-400 mb-1">
                 <span>Tloušťka tahu</span>
-                <span className="font-mono-nums text-zinc-200">{strokeWidth}px</span>
+                <span className="font-mono-nums text-zinc-800 dark:text-zinc-200">{strokeWidth}px</span>
               </div>
               <input
                 type="range"
@@ -483,14 +499,14 @@ export const IconsLibraryView: React.FC = () => {
                 step="0.5"
                 value={strokeWidth}
                 onChange={(e) => setStrokeWidth(Number(e.target.value))}
-                className="w-full accent-zinc-200 cursor-pointer"
+                className="w-full accent-zinc-900 dark:accent-zinc-200 cursor-pointer"
               />
             </div>
           )}
 
           {/* Color Palettes */}
           <div>
-            <label className="block text-[11px] text-zinc-400 mb-1">
+            <label className="block text-[11px] text-zinc-500 dark:text-zinc-400 mb-1">
               Barva (Primární)
             </label>
             <div className="flex items-center gap-1.5 mb-2">
@@ -498,13 +514,13 @@ export const IconsLibraryView: React.FC = () => {
                 type="color"
                 value={iconColor}
                 onChange={(e) => setIconColor(e.target.value)}
-                className="w-7 h-7 rounded border border-zinc-800 bg-transparent cursor-pointer"
+                className="w-7 h-7 rounded border border-zinc-300 dark:border-zinc-800 bg-transparent cursor-pointer"
               />
               <input
                 type="text"
                 value={iconColor}
                 onChange={(e) => setIconColor(e.target.value)}
-                className="w-full py-1 px-2 bg-zinc-950 border border-zinc-800 rounded text-xs text-white font-mono-nums uppercase"
+                className="w-full py-1 px-2 bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded text-xs text-zinc-900 dark:text-white font-mono-nums uppercase shadow-xs dark:shadow-none"
               />
             </div>
 
@@ -517,7 +533,7 @@ export const IconsLibraryView: React.FC = () => {
                     setIconColor(c.color);
                     setSecondaryColor(c.secondary);
                   }}
-                  className="w-5 h-5 rounded-md border border-zinc-700 cursor-pointer hover:scale-110 transition-transform shadow-xs"
+                  className="w-5 h-5 rounded-md border border-zinc-400 dark:border-zinc-700 cursor-pointer hover:scale-110 transition-transform shadow-xs"
                   style={{
                     background:
                       selectedStyle === 'duotone'
@@ -533,7 +549,7 @@ export const IconsLibraryView: React.FC = () => {
           {/* Secondary Color for Duotone */}
           {selectedStyle === 'duotone' && (
             <div>
-              <label className="block text-[11px] text-zinc-400 mb-1">
+              <label className="block text-[11px] text-zinc-500 dark:text-zinc-400 mb-1">
                 Sekundární tón (Duotone)
               </label>
               <div className="flex items-center gap-1.5">
@@ -541,13 +557,13 @@ export const IconsLibraryView: React.FC = () => {
                   type="color"
                   value={secondaryColor}
                   onChange={(e) => setSecondaryColor(e.target.value)}
-                  className="w-7 h-7 rounded border border-zinc-800 bg-transparent cursor-pointer"
+                  className="w-7 h-7 rounded border border-zinc-300 dark:border-zinc-800 bg-transparent cursor-pointer"
                 />
                 <input
                   type="text"
                   value={secondaryColor}
                   onChange={(e) => setSecondaryColor(e.target.value)}
-                  className="w-full py-1 px-2 bg-zinc-950 border border-zinc-800 rounded text-xs text-white font-mono-nums uppercase"
+                  className="w-full py-1 px-2 bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 rounded text-xs text-zinc-900 dark:text-white font-mono-nums uppercase shadow-xs dark:shadow-none"
                 />
               </div>
             </div>
@@ -558,19 +574,19 @@ export const IconsLibraryView: React.FC = () => {
       {/* Main Content Area */}
       <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 space-y-4 flex flex-col">
         {/* Top Action Bar */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-zinc-800/80 shrink-0">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200 dark:border-zinc-800/80 shrink-0">
           {/* Search Box */}
           <div className="relative flex-1 max-w-md">
-            <div className="relative flex items-center bg-zinc-900/90 border border-zinc-800 rounded-xl">
-              <div className="pl-3 pr-2 text-zinc-400">
-                <Search className="w-4 h-4" />
+            <div className="relative flex items-center bg-white dark:bg-zinc-900/90 border border-zinc-300 dark:border-zinc-800 focus-within:border-cyan-500 dark:focus-within:border-zinc-600 rounded-xl shadow-xs dark:shadow-none">
+              <div className="pl-3 pr-2 text-zinc-400 dark:text-zinc-500">
+                <Search className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
               </div>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Hledat v 1600+ ikonách (např. 'user', 'shield', 'cart', 'heart')..."
-                className="w-full py-2 pr-4 text-xs sm:text-sm text-zinc-100 placeholder-zinc-500 bg-transparent focus:outline-none"
+                placeholder="Hledat v 1600+ ikonách (např. 'user', 'shield', 'cart', 'krypto')..."
+                className="w-full py-2 pr-4 text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 bg-transparent focus:outline-none"
               />
             </div>
           </div>
@@ -590,10 +606,10 @@ export const IconsLibraryView: React.FC = () => {
             {/* Custom Sets Manager Button */}
             <button
               onClick={() => setIsCustomManagerOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-200 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg transition-colors cursor-pointer shrink-0"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-700 hover:text-zinc-950 bg-white hover:bg-zinc-100 dark:text-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 border border-zinc-300 dark:border-zinc-800 rounded-lg transition-colors cursor-pointer shrink-0 shadow-xs dark:shadow-none"
               title="Spravovat a nahrávat vlastní SVG sady"
             >
-              <Folder className="w-3.5 h-3.5 text-zinc-400" />
+              <Folder className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
               <span>Vlastní sady ({allIcons.filter((i) => i.isCustom).length})</span>
             </button>
 
@@ -604,8 +620,8 @@ export const IconsLibraryView: React.FC = () => {
               }}
               className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg transition-colors cursor-pointer shrink-0 ${
                 isMultiSelectMode
-                  ? 'bg-zinc-800 text-white font-semibold border border-zinc-700'
-                  : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
+                  ? 'bg-zinc-900 text-white dark:bg-zinc-800 dark:text-white font-semibold border border-zinc-900 dark:border-zinc-700 shadow-xs'
+                  : 'bg-white hover:bg-zinc-100 text-zinc-700 hover:text-zinc-950 border border-zinc-300 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:text-white dark:border-zinc-800 shadow-xs dark:shadow-none'
               }`}
             >
               <CheckSquare className="w-3.5 h-3.5" />
@@ -616,20 +632,20 @@ export const IconsLibraryView: React.FC = () => {
               <>
                 <button
                   onClick={selectAllFiltered}
-                  className="px-2.5 py-1.5 text-xs text-zinc-400 hover:text-zinc-200 bg-zinc-900 rounded-lg border border-zinc-800 cursor-pointer"
+                  className="px-2.5 py-1.5 text-xs text-zinc-600 hover:text-zinc-950 bg-white hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-200 dark:bg-zinc-900 rounded-lg border border-zinc-300 dark:border-zinc-800 cursor-pointer shadow-xs dark:shadow-none"
                 >
                   Vybrat vše
                 </button>
                 <button
                   onClick={deselectAll}
-                  className="px-2.5 py-1.5 text-xs text-zinc-400 hover:text-zinc-200 bg-zinc-900 rounded-lg border border-zinc-800 cursor-pointer"
+                  className="px-2.5 py-1.5 text-xs text-zinc-600 hover:text-zinc-950 bg-white hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-200 dark:bg-zinc-900 rounded-lg border border-zinc-300 dark:border-zinc-800 cursor-pointer shadow-xs dark:shadow-none"
                 >
                   Zrušit
                 </button>
               </>
             )}
 
-            <span className="text-xs font-mono-nums text-zinc-400 ml-1 shrink-0">
+            <span className="text-xs font-mono-nums text-zinc-600 dark:text-zinc-400 ml-1 shrink-0">
               {filteredIcons.length} nalezeno
             </span>
           </div>
@@ -643,8 +659,8 @@ export const IconsLibraryView: React.FC = () => {
               onClick={() => setSelectedCustomCollection('all')}
               className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer whitespace-nowrap ${
                 selectedCustomCollection === 'all'
-                  ? 'bg-zinc-100 text-zinc-900 font-semibold'
-                  : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
+                  ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 font-semibold shadow-xs'
+                  : 'bg-white text-zinc-700 hover:text-zinc-950 border border-zinc-300 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 dark:border-zinc-800 shadow-xs dark:shadow-none'
               }`}
             >
               Všechny sady ({allIcons.filter((i) => i.isCustom).length})
@@ -659,8 +675,8 @@ export const IconsLibraryView: React.FC = () => {
                   onClick={() => setSelectedCustomCollection(col)}
                   className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                     selectedCustomCollection === col
-                      ? 'bg-zinc-100 text-zinc-900 font-semibold'
-                      : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800'
+                      ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 font-semibold shadow-xs'
+                      : 'bg-white text-zinc-700 hover:text-zinc-950 border border-zinc-300 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 dark:border-zinc-800 shadow-xs dark:shadow-none'
                   }`}
                 >
                   <span>{col}</span>
@@ -673,16 +689,16 @@ export const IconsLibraryView: React.FC = () => {
 
         {/* Floating Batch Action Toolbar (When icons are selected) */}
         {selectedIconIds.size > 0 && (
-          <div className="p-3 bg-zinc-900/95 border border-zinc-700 rounded-xl flex flex-wrap items-center justify-between gap-3 shadow-xl backdrop-blur-md animate-in fade-in">
-            <div className="text-xs text-zinc-200 font-medium flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400" />
+          <div className="p-3 bg-white/95 dark:bg-zinc-900/95 border border-zinc-200 dark:border-zinc-700 rounded-xl flex flex-wrap items-center justify-between gap-3 shadow-xl backdrop-blur-md animate-in fade-in">
+            <div className="text-xs text-zinc-800 dark:text-zinc-200 font-medium flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-500 dark:bg-cyan-400" />
               <span>Vybráno <strong>{selectedIconIds.size}</strong> ikon</span>
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopyBatchToFigma}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-950 bg-cyan-400 hover:bg-cyan-300 rounded-lg transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white dark:text-zinc-950 bg-cyan-600 hover:bg-cyan-500 dark:bg-cyan-400 dark:hover:bg-cyan-300 rounded-lg transition-colors cursor-pointer shadow-xs"
                 title="Kopírovat pro přímé vložení (Ctrl+V) do Figma"
               >
                 {copiedType === 'figma-batch' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -692,9 +708,9 @@ export const IconsLibraryView: React.FC = () => {
               <button
                 onClick={handleDownloadBatchZip}
                 disabled={isZipping}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-200 bg-zinc-800 hover:bg-zinc-750 border border-zinc-700 rounded-lg transition-colors cursor-pointer disabled:opacity-50"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-200 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-750 border border-zinc-200 dark:border-zinc-700 rounded-lg transition-colors cursor-pointer disabled:opacity-50"
               >
-                <Archive className="w-3.5 h-3.5 text-zinc-400" />
+                <Archive className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                 <span>{isZipping ? 'Balím ZIP...' : 'Stáhnout jako ZIP (.zip)'}</span>
               </button>
             </div>
@@ -704,7 +720,7 @@ export const IconsLibraryView: React.FC = () => {
         {/* Icons Grid */}
         <div className="flex-1">
           {filteredIcons.length === 0 ? (
-            <div className="py-20 text-center text-zinc-500 text-xs bg-zinc-900/20 border border-dashed border-zinc-800 rounded-2xl">
+            <div className="py-20 text-center text-zinc-500 text-xs bg-zinc-50 dark:bg-zinc-900/20 border border-dashed border-zinc-200 dark:border-zinc-800 rounded-2xl">
               Nebyly nalezeny žádné ikony pro zadané kritérium.
             </div>
           ) : (
@@ -724,8 +740,8 @@ export const IconsLibraryView: React.FC = () => {
                     }}
                     className={`group relative flex flex-col items-center justify-between p-3 rounded-xl border transition-all cursor-pointer aspect-square ${
                       isSelected
-                        ? 'bg-zinc-800 border-cyan-400/80 shadow-md ring-1 ring-cyan-400/50'
-                        : 'bg-zinc-900/40 hover:bg-zinc-900 border-zinc-800/80 hover:border-zinc-700'
+                        ? 'bg-cyan-50/70 border-cyan-500 shadow-sm ring-1 ring-cyan-500 dark:bg-zinc-800 dark:border-cyan-400/80 dark:ring-cyan-400/50'
+                        : 'bg-white hover:bg-zinc-50/90 border-zinc-200 hover:border-zinc-300 dark:bg-zinc-900/40 dark:hover:bg-zinc-900 dark:border-zinc-800/80 dark:hover:border-zinc-700 shadow-xs'
                     }`}
                     title={icon.czechName}
                   >
@@ -733,12 +749,12 @@ export const IconsLibraryView: React.FC = () => {
                     {isMultiSelectMode && (
                       <button
                         onClick={(e) => toggleSelectIcon(icon.id, e)}
-                        className="absolute top-1.5 left-1.5 text-zinc-400 hover:text-white p-0.5"
+                        className="absolute top-1.5 left-1.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-white p-0.5"
                       >
                         {isSelected ? (
-                          <CheckSquare className="w-3.5 h-3.5 text-cyan-400" />
+                          <CheckSquare className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                         ) : (
-                          <SquareIcon className="w-3.5 h-3.5 text-zinc-600" />
+                          <SquareIcon className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-600" />
                         )}
                       </button>
                     )}
@@ -747,7 +763,7 @@ export const IconsLibraryView: React.FC = () => {
                     {icon.isCustom && !icon.isCurated && (
                       <button
                         onClick={(e) => handleDeleteCustomIcon(icon.id, e)}
-                        className="absolute top-1.5 right-1.5 p-1 text-zinc-500 hover:text-rose-400 opacity-60 hover:opacity-100 transition-opacity"
+                        className="absolute top-1.5 right-1.5 p-1 text-zinc-400 hover:text-rose-500 opacity-60 hover:opacity-100 transition-opacity"
                         title="Smazat tuto vlastní ikonu"
                       >
                         <Trash2 className="w-3 h-3" />
@@ -757,13 +773,13 @@ export const IconsLibraryView: React.FC = () => {
                     {/* Quick 1-Click Figma Copy Button on hover */}
                     <button
                       onClick={(e) => handleCopyCardForFigma(icon, e)}
-                      className="opacity-0 group-hover:opacity-100 absolute bottom-1.5 right-1.5 px-1.5 py-0.5 bg-zinc-950/90 hover:bg-cyan-950 border border-zinc-750 hover:border-cyan-500 text-zinc-400 hover:text-cyan-300 rounded text-[9px] font-medium flex items-center gap-1 transition-all cursor-pointer z-10"
+                      className="opacity-0 group-hover:opacity-100 absolute bottom-1.5 right-1.5 px-1.5 py-0.5 bg-white/95 hover:bg-cyan-50 border border-zinc-250 hover:border-cyan-400 text-zinc-700 hover:text-cyan-700 dark:bg-zinc-950/90 dark:hover:bg-cyan-950 dark:border-zinc-750 dark:hover:border-cyan-500 dark:text-zinc-400 dark:hover:text-cyan-300 rounded text-[9px] font-medium flex items-center gap-1 transition-all cursor-pointer z-10 shadow-xs"
                       title="Zkopírovat pro Figmu (Ctrl+V)"
                     >
                       {copiedCardId === icon.id ? (
-                        <Check className="w-2.5 h-2.5 text-emerald-400" />
+                        <Check className="w-2.5 h-2.5 text-emerald-600 dark:text-emerald-400" />
                       ) : (
-                        <Zap className="w-2.5 h-2.5 text-cyan-400" />
+                        <Zap className="w-2.5 h-2.5 text-cyan-600 dark:text-cyan-400" />
                       )}
                       <span>{copiedCardId === icon.id ? 'Zkopírováno' : 'Figma'}</span>
                     </button>
@@ -774,7 +790,7 @@ export const IconsLibraryView: React.FC = () => {
                     </div>
 
                     {/* Label */}
-                    <span className="text-[10px] text-zinc-400 group-hover:text-zinc-200 truncate w-full text-center">
+                    <span className="text-[10px] text-zinc-600 group-hover:text-zinc-950 dark:text-zinc-400 dark:group-hover:text-zinc-200 truncate w-full text-center">
                       {icon.name}
                     </span>
                   </div>
@@ -788,52 +804,52 @@ export const IconsLibraryView: React.FC = () => {
       {/* SINGLE ICON DETAIL MODAL: FIGMA BRIDGE & EXPORT */}
       {selectedIcon && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 dark:bg-black/70 backdrop-blur-sm p-4"
           onClick={() => setSelectedIcon(null)}
         >
           <div
-            className="w-full max-w-lg bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden p-6 space-y-5"
+            className="w-full max-w-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden p-6 space-y-5"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
+            <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-800">
               <div>
-                <h3 className="text-base font-semibold text-white">
+                <h3 className="text-base font-semibold text-zinc-900 dark:text-white">
                   {selectedIcon.czechName}
                 </h3>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">
                   {selectedIcon.name} · {selectedStyle.toUpperCase()}
                 </p>
               </div>
               <button
                 onClick={() => setSelectedIcon(null)}
-                className="p-1 rounded text-zinc-400 hover:text-white"
+                className="p-1 rounded text-zinc-400 hover:text-zinc-700 dark:hover:text-white"
               >
                 ✕
               </button>
             </div>
 
             {/* Big Preview Area */}
-            <div className="w-full h-36 bg-zinc-950 rounded-xl border border-zinc-800 flex items-center justify-center relative">
+            <div className="w-full h-36 bg-zinc-50 dark:bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800 flex items-center justify-center relative">
               <div className="scale-125">
                 {renderIconPreview(selectedIcon, 40)}
               </div>
 
-              <span className="absolute bottom-2 left-2 text-[10px] font-mono-nums text-zinc-500">
+              <span className="absolute bottom-2 left-2 text-[10px] font-mono-nums text-zinc-400 dark:text-zinc-500">
                 viewBox: {selectedIcon.viewBox || '0 0 24 24'}
               </span>
             </div>
 
             {/* FIGMA & AI GENERATOR BUTTONS */}
             <div className="space-y-2">
-              <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">
+              <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
                 Figma Bridge & Formáty pro AI
               </span>
 
               {/* 1-Click Copy for Figma */}
               <button
                 onClick={() => handleCopy('figma', formatSvgForFigma(selectedIcon, exportConfig))}
-                className="w-full py-2.5 px-3 text-xs font-semibold text-zinc-950 bg-cyan-400 hover:bg-cyan-300 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                className="w-full py-2.5 px-3 text-xs font-semibold text-white dark:text-zinc-950 bg-cyan-600 hover:bg-cyan-500 dark:bg-cyan-400 dark:hover:bg-cyan-300 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors shadow-sm"
                 title="Vložte přímo do Figma pomocí Ctrl+V"
               >
                 {copiedType === 'figma' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
@@ -843,18 +859,18 @@ export const IconsLibraryView: React.FC = () => {
               {/* React JSX */}
               <button
                 onClick={() => handleCopy('jsx', generateReactJsxCode(selectedIcon, exportConfig))}
-                className="w-full py-2 px-3 text-xs font-medium text-zinc-200 bg-zinc-800 hover:bg-zinc-750 border border-zinc-700/60 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                className="w-full py-2 px-3 text-xs font-medium text-zinc-700 dark:text-zinc-200 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-750 border border-zinc-200 dark:border-zinc-700/60 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors"
               >
-                {copiedType === 'jsx' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Code2 className="w-3.5 h-3.5 text-zinc-400" />}
+                {copiedType === 'jsx' ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <Code2 className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
                 <span>{copiedType === 'jsx' ? 'React JSX zkopírováno!' : 'Kopírovat React JSX komponentu (TypeScript)'}</span>
               </button>
 
               {/* Tailwind CSS inline SVG */}
               <button
                 onClick={() => handleCopy('tailwind', generateTailwindSvgSnippet(selectedIcon, exportConfig))}
-                className="w-full py-2 px-3 text-xs font-medium text-zinc-300 hover:text-white bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-700/60 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                className="w-full py-2 px-3 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white bg-zinc-100/70 hover:bg-zinc-100 dark:bg-zinc-800/60 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/60 rounded-lg flex items-center justify-center gap-2 cursor-pointer transition-colors"
               >
-                {copiedType === 'tailwind' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <FileCode className="w-3.5 h-3.5 text-zinc-400" />}
+                {copiedType === 'tailwind' ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <FileCode className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
                 <span>{copiedType === 'tailwind' ? 'Tailwind SVG zkopírováno!' : 'Kopírovat Tailwind CSS SVG snippet'}</span>
               </button>
 
@@ -871,17 +887,17 @@ export const IconsLibraryView: React.FC = () => {
                     a.click();
                     URL.revokeObjectURL(url);
                   }}
-                  className="py-2 px-3 text-xs font-medium text-zinc-200 bg-zinc-800 hover:bg-zinc-750 border border-zinc-700/60 rounded-lg flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="py-2 px-3 text-xs font-medium text-zinc-700 dark:text-zinc-200 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-750 border border-zinc-200 dark:border-zinc-700/60 rounded-lg flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <Download className="w-3.5 h-3.5 text-zinc-400" />
+                  <Download className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                   <span>Stáhnout SVG</span>
                 </button>
 
                 <button
                   onClick={() => handleDownloadPng(selectedIcon, 512)}
-                  className="py-2 px-3 text-xs font-medium text-zinc-200 bg-zinc-800 hover:bg-zinc-750 border border-zinc-700/60 rounded-lg flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="py-2 px-3 text-xs font-medium text-zinc-700 dark:text-zinc-200 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-750 border border-zinc-200 dark:border-zinc-700/60 rounded-lg flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <ImageIcon className="w-3.5 h-3.5 text-zinc-400" />
+                  <ImageIcon className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                   <span>Stáhnout PNG (512px)</span>
                 </button>
               </div>
