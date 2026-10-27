@@ -4,6 +4,15 @@ Všechny významné změny v projektu GlyphFlow jsou zaznamenány v tomto dokume
 
 ## [Unreleased]
 
+### Přidáno & Dokončeno (Windows 11 Desktop & GitHub v1.3.4)
+- **Samostatný Portable `.exe` balíček pro Windows 11**:
+  - Přidán skript `npm run desktop:portable` (`tauri build --no-bundle`), který generuje čistý samostatný spustitelný soubor bez nutnosti instalátoru.
+  - Výsledný `glyphflow.exe` (3,65 MB) obsahuje veškeré frontendové assety, fonty a offline databázi přímo v sobě a využívá vestavěný WebView2 runtime Windows 11 s minimálním paměťovým footprintem.
+- **Oficiální veřejný GitHub repozitář**:
+  - Publikován veřejný repozitář na [merakiolab-cyber/GlyphFlow](https://github.com/merakiolab-cyber/GlyphFlow) se synchronizací hlavní větve `master`.
+- **Aktualizace dokumentace a plánu rozvoje**:
+  - V [README.md](README.md) a [ROADMAP.md](ROADMAP.md) zaznamenán návod na portable build a uzavřena Fáze 4 rozvoje.
+
 ### Opraveno & Vylepšeno (Fluent Light Mode v1.3.3)
 - **Kompletní Fluent Windows 11 Light Mode visual overhaul**:
   - **Tailwind v4 integrace**: Přidána `@custom-variant dark (&:where(.dark, .dark *));` do `src/index.css`, která zaručuje správnou aktivaci `.dark` tříd nezávisle na systémovém nastavení OS.

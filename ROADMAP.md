@@ -22,11 +22,15 @@ Tento dokument definuje plánovaný rozvoj aplikace GlyphFlow v příštích ver
 - [x] **Rozšířená typografická analýza**: Kompletní OpenType Studio s interaktivním přepínáním funkcí (`liga`, `dlig`, `calt`, `tnum`, `zero`, `frac`, `ss01`-`ss03`, `case`, `smcp`, `kern`), testování na systémových fontech Windows i vlastních písmech, porovnávání Před/Po a anatomie glyfů.
 - [ ] **Cloudová synchronizace (volitelná)**: Ponecháno; default je lokální-only. Nezapínat bez explicitního zadání.
 
-## 🪟 Fáze 4: Cursor → GitHub portfolio + Win 11 apka (v kurzu)
-- [x] Načtení kontextu v Cursoru, pravidla do/don't, bezpečnostní audit zapsaný do changelogu.
-- [x] Vyčistit AI Studio leftover (`react-example`, Gemini/Express, `metadata.json`, unix `rm` v npm `clean`).
-- [x] Sanitizace SVG importu, validace JSON záloh a `?sync=`.
-- [x] Doplnit chybějící PWA asset `apple-touch-icon.png`; self-host fonty pro skutečný offline.
-- [x] `git init`, licence (MIT), README pro portfolio, veřejný GitHub remote (připraveno na remote).
-- [x] Windows 11: **Tauri 2** — nativní backend inicializován (`src-tauri`), bezpečnostní CSP hardened, ověřeno kompilací Rustu (`cargo check`). PWA ponechána jako vedlejší kanál.
-- [x] Windows-friendly npm skripty (`clean` bez `rm -rf`).
+## 🪟 Fáze 4: GitHub portfolio + Win 11 Desktop apka (Dokončeno)
+- [x] Načtení kontextu, bezpečnostní audit a sanitizace SVG/JSON.
+- [x] Vyčištění AI Studio zbytků a příprava Windows-friendly skriptů (`clean`, `lint`, `build`).
+- [x] PWA offline podpora, self-hostování WOFF2 fontů a chybějící PWA assety.
+- [x] Licence MIT, detailní portfolio dokumentace v README a inicializace veřejného GitHub repozitáře ([merakiolab-cyber/GlyphFlow](https://github.com/merakiolab-cyber/GlyphFlow)).
+- [x] Windows 11: **Tauri 2** — nativní backend inicializován (`src-tauri`), bezpečnostní CSP hardened.
+- [x] Sestaven a otestován samostatný **portable `.exe`** (3,65 MB standalone binárka bez nutnosti instalace) přes `npm run desktop:portable`.
+
+## 🚀 Fáze 5: Budoucí vylepšení & distribuce (Plánováno)
+- [ ] GitHub Actions CI/CD workflow pro automatické vytváření release balíčků (.exe / installer).
+- [ ] Podpora pro další proměnné osy Variable Fonts (wght, wdth, slnt, opsz) v Typography Studiu.
+- [ ] Volitelná šifrovaná synchronizace nastavení a kolekcí.
