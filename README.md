@@ -165,6 +165,9 @@ npm run lint
 # Produkční sestavení webové PWA aplikace
 npm run build
 
+# Sestavení samostatného portable .exe (bez instalátoru)
+npm run desktop:portable
+
 # Sestavení nativního Windows instalačního balíčku (.exe / .msi)
 npm run desktop:build
 ```

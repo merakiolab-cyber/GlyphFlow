@@ -10,6 +10,7 @@
     "clean": "node --input-type=module -e \"import fs from 'node:fs'; fs.rmSync('dist', { recursive: true, force: true }); fs.rmSync('dev-dist', { recursive: true, force: true });\"",
     "lint": "tsc --noEmit",
     "desktop:dev": "tauri dev",
+    "desktop:portable": "tauri build --no-bundle",
     "desktop:build": "tauri build"
   },
   "dependencies": {
